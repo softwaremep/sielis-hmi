@@ -1,6 +1,7 @@
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
 import Select from '../components/Select';
+import Stat from '../components/Stat';
 
 // Area options
 const selectOptions = [
@@ -22,6 +23,12 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
         <div className="mt-8 space-y-8">
           <Select title="Area" options={selectOptions} />
+          <Stat title="Waktu" primary="15 Maret 2022" secondary="09:14:57" />
+          <Stat
+            title="Data Terakhir"
+            primary="15 Maret 2022"
+            secondary="06:00:00"
+          />
         </div>
       </section>
 
