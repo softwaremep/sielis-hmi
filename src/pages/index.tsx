@@ -21,14 +21,63 @@ const Home: NextPage = () => {
     <Layout>
       <section>
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
-        <div className="mt-8 space-y-8">
-          <Select title="Area" options={selectOptions} />
-          <Stat title="Waktu" primary="15 Maret 2022" secondary="09:14:57" />
-          <Stat
-            title="Data Terakhir"
-            primary="15 Maret 2022"
-            secondary="06:00:00"
-          />
+        <div className="mt-8 flex items-start justify-between">
+          <section className="space-y-8">
+            <Select title="Area" options={selectOptions} />
+            <Stat
+              title="Waktu"
+              primary="15 Maret 2022"
+              secondary="09:14:57"
+              variant="main"
+            />
+            <Stat
+              title="Data terakhir"
+              primary="15 Maret 2022"
+              secondary="06:00:00"
+              variant="main"
+            />
+          </section>
+          <section className="grid grid-cols-3 gap-x-8">
+            <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
+              Hari ini
+            </h3>
+            <Stat
+              title="Total"
+              primary="Rp114.050,00"
+              secondary="116,92 kWh"
+              variant="aside"
+            />
+            <Stat
+              title="Rata-rata"
+              primary="Rp16.293,00"
+              secondary="16,7 kWh"
+              variant="aside"
+              unit="jam"
+            />
+            <h3 className="col-span-3 mt-8 mb-2.5 text-lg font-semibold">
+              Bulan lalu
+            </h3>
+            <Stat
+              title="Total"
+              primary="Rp12.353.475,00"
+              secondary="11.348,68 kWh"
+              variant="aside"
+            />
+            <Stat
+              title="Rata-rata per hari"
+              primary="Rp441.196,00"
+              secondary="405,31 kWh"
+              variant="aside"
+              unit="hari"
+            />
+            <Stat
+              title="Rata-rata per jam"
+              primary="Rp18.383,17"
+              secondary="16,89 kWh"
+              variant="aside"
+              unit="jam"
+            />
+          </section>
         </div>
       </section>
 
