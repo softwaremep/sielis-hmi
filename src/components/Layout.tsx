@@ -39,7 +39,7 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
         </div>
         <nav className="ml-20 flex gap-8 text-blue-900">{navList}</nav>
       </header>
-      <main>{children}</main>
+      <main className="mx-auto mt-14 max-w-screen-lg">{children}</main>
     </>
   );
 }
