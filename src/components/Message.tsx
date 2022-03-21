@@ -8,7 +8,7 @@ type Props = {
 function Message({ type, className }: Props) {
   return (
     <div
-      className={`${className} flex w-[45ch] gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
+      className={`${className} flex gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
     >
       <Icon
         icon={type === 'positive' ? 'bx:line-chart' : 'bx:line-chart-down'}
@@ -16,7 +16,8 @@ function Message({ type, className }: Props) {
           type === 'positive' ? 'text-green-500' : 'text-red-500'
         } h-12 w-12 shrink-0`}
       />
-      Rata-rata per jam hari ini lebih {type === 'positive' ? 'hemat' : 'boros'}{' '}
+      Rata-rata per jam hari ini lebih {type === 'positive' ? 'hemat' : 'boros'}
+      <br />
       dibandingkan rata-rata per jam bulan lalu
     </div>
   );
