@@ -1,5 +1,6 @@
 import type { NextPage } from 'next';
 import Layout from '../components/Layout';
+import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
 
@@ -77,6 +78,7 @@ const Home: NextPage = () => {
               variant="aside"
               unit="jam"
             />
+            <Message type="positive" className="col-span-2 mt-8" />
           </section>
         </div>
       </section>
