@@ -63,7 +63,7 @@ export type NowData = {
 export async function fetchNowData(meterId: string): Promise<RawNowData> {
   const queryParams = new URLSearchParams({ meter_id: meterId });
   const response = await fetch(
-    `http://localhost:5000/now?${queryParams.toString()}`
+    `${process.env.NEXT_PUBLIC_DATA_PROVIDER}/now?${queryParams.toString()}`
   );
   if (!response.ok) {
     throw new Error('Error, data could not be fetched');
