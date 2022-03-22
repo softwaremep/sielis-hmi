@@ -4,7 +4,7 @@ import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
-import { fetchNowData } from '../lib/now';
+import { fetchNowData, parseDisplayNowData, parseRawNowData } from '../lib/now';
 
 // Area options
 const selectOptions = [
@@ -22,6 +22,8 @@ const selectOptions = [
 const Home: NextPage = () => {
   const meterId = '133';
   const result = useQuery(['now', meterId], () => fetchNowData(meterId));
+  const data = result.data ? parseRawNowData(result.data) : undefined;
+  const displayData = data ? parseDisplayNowData(data) : undefined;
   return (
     <Layout>
       <section>
@@ -29,60 +31,68 @@ const Home: NextPage = () => {
         <div className="mt-8 flex items-start justify-between">
           <section className="space-y-8">
             <Select title="Area" options={selectOptions} />
-            <Stat
-              title="Waktu"
-              primary="15 Maret 2022"
-              secondary="09:14:57"
-              variant="main"
-            />
-            <Stat
-              title="Data terakhir"
-              primary="15 Maret 2022"
-              secondary="06:00:00"
-              variant="main"
-            />
+            {result.isSuccess && (
+              <>
+                <Stat
+                  title="Waktu"
+                  primary={displayData!.now.date}
+                  secondary={displayData!.now.time}
+                  variant="main"
+                />
+                <Stat
+                  title="Data terakhir"
+                  primary={displayData!.last.timestamp.date}
+                  secondary={displayData!.last.timestamp.time}
+                  variant="main"
+                />
+              </>
+            )}
           </section>
           <section className="grid grid-cols-3 gap-x-8">
-            <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
-              Hari ini
-            </h3>
-            <Stat
-              title="Total"
-              primary="Rp114.050,00"
-              secondary="116,92 kWh"
-              variant="aside"
-            />
-            <Stat
-              title="Rata-rata"
-              primary="Rp16.293,00"
-              secondary="16,7 kWh"
-              variant="aside"
-              unit="jam"
-            />
-            <h3 className="col-span-3 mt-8 mb-2.5 text-lg font-semibold">
-              Bulan lalu
-            </h3>
-            <Stat
-              title="Total"
-              primary="Rp12.353.475,00"
-              secondary="11.348,68 kWh"
-              variant="aside"
-            />
-            <Stat
-              title="Rata-rata per hari"
-              primary="Rp441.196,00"
-              secondary="405,31 kWh"
-              variant="aside"
-              unit="hari"
-            />
-            <Stat
-              title="Rata-rata per jam"
-              primary="Rp18.383,17"
-              secondary="16,89 kWh"
-              variant="aside"
-              unit="jam"
-            />
-            <Message type="positive" className="col-span-2 mt-8" />
+            {result.isSuccess && (
+              <>
+                <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
+                  Hari ini
+                </h3>
+                <Stat
+                  title="Total"
+                  primary={displayData!.today.totalCost}
+                  secondary={displayData!.today.totalPower}
+                  variant="aside"
+                />
+                <Stat
+                  title="Rata-rata"
+                  primary={displayData!.today.averageCost}
+                  secondary={displayData!.today.averagePower}
+                  variant="aside"
+                  unit="jam"
+                />
+                <h3 className="col-span-3 mt-8 mb-2.5 text-lg font-semibold">
+                  Bulan lalu
+                </h3>
+                <Stat
+                  title="Total"
+                  primary={displayData!.prevMonth.totalCost}
+                  secondary={displayData!.prevMonth.totalPower}
+                  variant="aside"
+                />
+                <Stat
+                  title="Rata-rata per hari"
+                  primary={displayData!.prevMonth.dayCost}
+                  secondary={displayData!.prevMonth.dayPower}
+                  variant="aside"
+                  unit="hari"
+                />
+                <Stat
+                  title="Rata-rata per jam"
+                  primary={displayData!.prevMonth.hourCost}
+                  secondary={displayData!.prevMonth.hourPower}
+                  variant="aside"
+                  unit="jam"
+                />
+                <Message type="positive" className="col-span-2 mt-8" />
+              </>
+            )}
           </section>
         </div>
       </section>
@@ -91,9 +101,6 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">
           Konsumsi Daya Listrik (kW) 1 Jam Terakhir
         </h2>
-        {result.isLoading && <p>Loading...</p>}
-        {result.isError && <p>Error</p>}
-        {result.isSuccess && <pre>{JSON.stringify(result.data, null, 2)}</pre>}
       </section>
     </Layout>
   );
