@@ -60,6 +60,17 @@ export type NowData = {
   };
 };
 
+export async function fetchNowData(meterId: string): Promise<RawNowData> {
+  const queryParams = new URLSearchParams({ meter_id: meterId });
+  const response = await fetch(
+    `http://localhost:5000/now?${queryParams.toString()}`
+  );
+  if (!response.ok) {
+    throw new Error('Error, data could not be fetched');
+  }
+  return response.json();
+}
+
 export function parseRawNowData(data: RawNowData): NowData {
   return {
     chart: data.chart_data.map(d => ({

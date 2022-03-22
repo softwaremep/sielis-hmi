@@ -1,23 +1,27 @@
 import type { NextPage } from 'next';
+import { useQuery } from 'react-query';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
+import { fetchNowData } from '../lib/now';
 
 // Area options
 const selectOptions = [
-  { value: 133, label: 'Labtek 5' },
-  { value: 135, label: 'Labtek 6' },
-  { value: 136, label: 'Labtek 7' },
-  { value: 138, label: 'Labtek 8' },
-  { value: 163, label: 'SBM' },
-  { value: 173, label: 'CRCS' },
-  { value: 174, label: 'CAS' },
-  { value: 175, label: 'CADL' },
-  { value: 176, label: 'CIBE' },
+  { value: '133', label: 'Labtek 5' },
+  { value: '135', label: 'Labtek 6' },
+  { value: '136', label: 'Labtek 7' },
+  { value: '138', label: 'Labtek 8' },
+  { value: '163', label: 'SBM' },
+  { value: '173', label: 'CRCS' },
+  { value: '174', label: 'CAS' },
+  { value: '175', label: 'CADL' },
+  { value: '176', label: 'CIBE' },
 ];
 
 const Home: NextPage = () => {
+  const meterId = '133';
+  const result = useQuery(['now', meterId], () => fetchNowData(meterId));
   return (
     <Layout>
       <section>
@@ -87,6 +91,9 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">
           Konsumsi Daya Listrik (kW) 1 Jam Terakhir
         </h2>
+        {result.isLoading && <p>Loading...</p>}
+        {result.isError && <p>Error</p>}
+        {result.isSuccess && <pre>{JSON.stringify(result.data, null, 2)}</pre>}
       </section>
     </Layout>
   );

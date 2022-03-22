@@ -1,6 +1,6 @@
 type Props = {
   title: string;
-  options: { value: number; label: string }[];
+  options: { value: string; label: string }[];
 };
 
 function Select({ title, options }: Props) {
