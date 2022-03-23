@@ -47,7 +47,7 @@ const Home: NextPage = () => {
   const data = result.data ? parseRawNowData(result.data) : undefined;
   const displayData = data ? parseDisplayNowData(data) : undefined;
   return (
-    <Layout>
+    <Layout title="Beranda">
       <section>
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
         <div className="mt-8 flex items-start justify-between">

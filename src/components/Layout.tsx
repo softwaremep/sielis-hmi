@@ -1,4 +1,5 @@
 import { Icon } from '@iconify/react';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -9,7 +10,11 @@ const navListData = [
   { label: 'Bulanan', href: '/monthly', icon: 'bi:calendar-month-fill' },
 ];
 
-function Layout({ children }: React.PropsWithChildren<{}>) {
+type Props = {
+  title: string;
+};
+
+function Layout({ title, children }: React.PropsWithChildren<Props>) {
   const router = useRouter();
   // Render nav
   const navList = navListData.map(navItem => (
@@ -29,6 +34,9 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
 
   return (
     <>
+      <Head>
+        <title>{title} | SiElis - Lab Manajemen Energi Teknik Fisika ITB</title>
+      </Head>
       <header className="flex items-center border-b border-b-stone-200 bg-stone-50 px-6 py-3 pl-32">
         <div className="mr-6 text-xl font-semibold text-blue-900">SiElis</div>
         <div>
@@ -40,6 +48,10 @@ function Layout({ children }: React.PropsWithChildren<{}>) {
         <nav className="ml-20 flex gap-8 text-blue-900">{navList}</nav>
       </header>
       <main className="mx-auto mt-14 max-w-screen-lg">{children}</main>
+      <footer className="mt-14 border-t border-t-stone-200 bg-stone-50 py-4 pl-32 text-sm">
+        <p>Dikembangkan oleh</p>
+        <p className="font-medium">Lab Manajemen Energi Teknik Fisika ITB</p>
+      </footer>
     </>
   );
 }
