@@ -14,6 +14,7 @@ import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
+import Table from '../components/Table';
 import { fetchNowData, parseDisplayNowData, parseRawNowData } from '../lib/now';
 
 // Area options
@@ -28,6 +29,17 @@ const selectOptions = [
   { value: '175', label: 'CADL' },
   { value: '176', label: 'CIBE' },
 ];
+
+// Table columns
+const columns = [
+  { Header: 'Tegangan (VLN)', accessor: 'volt' },
+  { Header: 'Frekuensi (Hz)', accessor: 'freq' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Arus (A)', accessor: 'A' },
+  { Header: 'Arus (A1)', accessor: 'A1' },
+  { Header: 'Arus (A2)', accessor: 'A2' },
+  { Header: 'Arus (A3)', accessor: 'A3' },
+] as const;
 
 const Home: NextPage = () => {
   const meterId = '133';
@@ -142,6 +154,11 @@ const Home: NextPage = () => {
                 <Line dataKey="power" stroke="rgb(30 58 138)" strokeWidth={2} />
               </LineChart>
             </ResponsiveContainer>
+            <Table
+              className="mt-8"
+              columns={columns}
+              data={[displayData!.last]}
+            />
           </>
         )}
       </section>
