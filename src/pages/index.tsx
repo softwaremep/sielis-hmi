@@ -134,7 +134,14 @@ const Home: NextPage = () => {
                   variant="aside"
                   unit="jam"
                 />
-                <Message type="positive" className="col-span-2 mt-8" />
+                <Message
+                  type={
+                    data!.today.averageCost < data!.prevMonth.hourCost
+                      ? 'positive'
+                      : 'negative'
+                  }
+                  className="col-span-2 mt-8"
+                />
               </>
             )}
           </section>
