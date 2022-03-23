@@ -11,7 +11,7 @@ function Select({ title, placeholder, options, value, onChange }: Props) {
     <div className="space-y-2.5">
       <h3 className="text-lg font-semibold">{title}</h3>
       <select
-        className="w-72 rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5"
+        className="w-72 cursor-pointer rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5"
         value={value}
         onChange={onChange}
       >

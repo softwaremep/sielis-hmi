@@ -5,8 +5,12 @@ export const currencyOptions = {
   precision: 0,
 };
 
-export function parseValue(value: number, unit?: string) {
-  let parsedValue = value.toFixed(2);
+export function parseValue(
+  value: number,
+  unit?: string,
+  separator: ',' | '.' = ','
+) {
+  let parsedValue = value.toFixed(2).replace(/[\.,]/g, separator);
   if (unit) {
     parsedValue += ` ${unit}`;
   }
@@ -15,4 +19,4 @@ export function parseValue(value: number, unit?: string) {
 
 export const timestampHourMinute = 'HH:mm';
 export const timestampHourMinuteSecond = 'HH:mm:ss';
-export const timestampDayMonthYear = 'dd MMM yyyy';
+export const timestampDayMonthYear = 'dd MMMM yyyy';

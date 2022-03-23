@@ -1,5 +1,6 @@
 import currency from 'currency.js';
 import { format } from 'date-fns';
+import { id } from 'date-fns/locale';
 import {
   currencyOptions,
   parseValue,
@@ -162,15 +163,15 @@ export function parseRawNowData(data: RawNowData): NowData {
 export function parseDisplayNowData(data: NowData): DisplayNowData {
   return {
     chart: data.chart.map(d => ({
-      power: parseValue(d.power),
+      power: parseValue(d.power, undefined, '.'),
       timestamp: d.timestamp.getTime(),
     })),
-    tickFormatter: tick => format(tick, timestampHourMinute),
-    labelFormatter: label => format(label, timestampHourMinute),
+    tickFormatter: tick => format(tick, timestampHourMinute, { locale: id }),
+    labelFormatter: label => format(label, timestampHourMinute, { locale: id }),
     formatter: value => [`${value} kW`, undefined],
     now: {
-      date: format(data.now, timestampDayMonthYear),
-      time: format(data.now, timestampHourMinuteSecond),
+      date: format(data.now, timestampDayMonthYear, { locale: id }),
+      time: format(data.now, timestampHourMinuteSecond, { locale: id }),
     },
     last: {
       A: parseValue(data.last.A),
@@ -181,8 +182,12 @@ export function parseDisplayNowData(data: NowData): DisplayNowData {
       freq: parseValue(data.last.freq),
       volt: parseValue(data.last.volt),
       timestamp: {
-        date: format(data.last.timestamp, timestampDayMonthYear),
-        time: format(data.last.timestamp, timestampHourMinuteSecond),
+        date: format(data.last.timestamp, timestampDayMonthYear, {
+          locale: id,
+        }),
+        time: format(data.last.timestamp, timestampHourMinuteSecond, {
+          locale: id,
+        }),
       },
     },
     prevMonth: {
