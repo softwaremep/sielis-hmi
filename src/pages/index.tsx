@@ -1,4 +1,5 @@
 import type { NextPage } from 'next';
+import { useState } from 'react';
 import { useQuery } from 'react-query';
 import {
   CartesianGrid,
@@ -42,18 +43,29 @@ const columns = [
 ] as const;
 
 const Home: NextPage = () => {
-  const meterId = '133';
-  const result = useQuery(['now', meterId], () => fetchNowData(meterId));
-  const data = result.data ? parseRawNowData(result.data) : undefined;
+  const [meterId, setMeterId] = useState('default');
+  const { isSuccess, data: rawData } = useQuery(
+    ['now', meterId],
+    () => fetchNowData(meterId),
+    { enabled: !!meterId }
+  );
+  const data = rawData ? parseRawNowData(rawData) : undefined;
   const displayData = data ? parseDisplayNowData(data) : undefined;
+
   return (
     <Layout title="Beranda">
       <section>
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
         <div className="mt-8 flex items-start justify-between">
           <section className="space-y-8">
-            <Select title="Area" options={selectOptions} />
-            {result.isSuccess && (
+            <Select
+              title="Area"
+              placeholder="Pilih area"
+              options={selectOptions}
+              value={meterId}
+              onChange={e => setMeterId(e.target.value)}
+            />
+            {isSuccess && (
               <>
                 <Stat
                   title="Waktu"
@@ -71,7 +83,7 @@ const Home: NextPage = () => {
             )}
           </section>
           <section className="grid grid-cols-3 gap-x-8">
-            {result.isSuccess && (
+            {isSuccess && (
               <>
                 <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
                   Hari ini
@@ -123,7 +135,7 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">
           Konsumsi Daya Listrik (kW) 1 Jam Terakhir
         </h2>
-        {result.isSuccess && (
+        {isSuccess && (
           <>
             <ResponsiveContainer aspect={3} className="mt-8">
               <LineChart
