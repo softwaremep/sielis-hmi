@@ -44,10 +44,12 @@ const columns = [
 
 const Home: NextPage = () => {
   const [meterId, setMeterId] = useState('default');
-  const { isSuccess, data: rawData } = useQuery(
+  const { status, data: rawData } = useQuery(
     ['now', meterId],
     () => fetchNowData(meterId),
-    { enabled: !!meterId }
+    {
+      enabled: meterId !== 'default',
+    }
   );
   const data = rawData ? parseRawNowData(rawData) : undefined;
   const displayData = data ? parseDisplayNowData(data) : undefined;
@@ -65,7 +67,7 @@ const Home: NextPage = () => {
               value={meterId}
               onChange={e => setMeterId(e.target.value)}
             />
-            {isSuccess && (
+            {status === 'success' && (
               <>
                 <Stat
                   title="Waktu"
@@ -81,9 +83,17 @@ const Home: NextPage = () => {
                 />
               </>
             )}
+            {status === 'loading' && (
+              <p className="font-medium text-blue-900">Loading...</p>
+            )}
+            {status === 'error' && (
+              <p className="font-medium text-red-500">
+                Data tidak dapat terambil
+              </p>
+            )}
           </section>
           <section className="grid grid-cols-3 gap-x-8">
-            {isSuccess && (
+            {status === 'success' && (
               <>
                 <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
                   Hari ini
@@ -132,11 +142,11 @@ const Home: NextPage = () => {
       </section>
 
       <section className="mt-16">
-        <h2 className="text-xl font-bold">
-          Konsumsi Daya Listrik (kW) 1 Jam Terakhir
-        </h2>
-        {isSuccess && (
+        {status === 'success' && (
           <>
+            <h2 className="text-xl font-bold">
+              Konsumsi Daya Listrik (kW) 1 Jam Terakhir
+            </h2>
             <ResponsiveContainer aspect={3} className="mt-8">
               <LineChart
                 data={displayData!.chart}
