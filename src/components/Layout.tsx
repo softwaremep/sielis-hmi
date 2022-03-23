@@ -37,21 +37,25 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
       <Head>
         <title>{title} | SiElis - Lab Manajemen Energi Teknik Fisika ITB</title>
       </Head>
-      <header className="flex items-center border-b border-b-stone-200 bg-stone-50 px-6 py-3 pl-32">
-        <div className="mr-6 text-xl font-semibold text-blue-900">SiElis</div>
-        <div>
-          <h1 className="text-xl font-semibold">
-            Sistem Informasi Energi Listrik
-          </h1>
-          <div className="font-medium">Institut Teknologi Bandung</div>
-        </div>
-        <nav className="ml-20 flex gap-8 text-blue-900">{navList}</nav>
-      </header>
-      <main className="mx-auto mt-14 max-w-screen-lg">{children}</main>
-      <footer className="mt-14 border-t border-t-stone-200 bg-stone-50 py-4 pl-32 text-sm">
-        <p>Dikembangkan oleh</p>
-        <p className="font-medium">Lab Manajemen Energi Teknik Fisika ITB</p>
-      </footer>
+      <div className="flex min-h-screen flex-col gap-14">
+        <header className="flex items-center border-b border-b-stone-200 bg-stone-50 px-6 py-3 pl-32">
+          <div className="mr-6 text-xl font-semibold text-blue-900">SiElis</div>
+          <div>
+            <h1 className="text-xl font-semibold">
+              Sistem Informasi Energi Listrik
+            </h1>
+            <div className="font-medium">Institut Teknologi Bandung</div>
+          </div>
+          <nav className="ml-20 flex gap-8 text-blue-900">{navList}</nav>
+        </header>
+        <main>
+          <div className="mx-auto max-w-screen-lg shrink-0">{children}</div>
+        </main>
+        <footer className="mt-auto border-t border-t-stone-200 bg-stone-50 py-4 pl-32 text-sm">
+          <p>Dikembangkan oleh</p>
+          <p className="font-medium">Lab Manajemen Energi Teknik Fisika ITB</p>
+        </footer>
+      </div>
     </>
   );
 }
