@@ -1,5 +1,15 @@
 import type { NextPage } from 'next';
 import { useQuery } from 'react-query';
+import {
+  CartesianGrid,
+  Label,
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
@@ -101,6 +111,39 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">
           Konsumsi Daya Listrik (kW) 1 Jam Terakhir
         </h2>
+        {result.isSuccess && (
+          <>
+            <ResponsiveContainer aspect={3} className="mt-8">
+              <LineChart
+                data={displayData!.chart}
+                margin={{ top: 5, right: 5, bottom: 25, left: 5 }}
+              >
+                <CartesianGrid />
+                <XAxis
+                  dataKey="timestamp"
+                  domain={['dataMin', 'dataMax']}
+                  tickFormatter={displayData!.tickFormatter}
+                  type="number"
+                  scale="time"
+                >
+                  <Label position="insideBottom" dy={25}>
+                    Waktu
+                  </Label>
+                </XAxis>
+                <YAxis>
+                  <Label position="insideLeft" angle={-90} dy={65}>
+                    Daya Listrik (kW)
+                  </Label>
+                </YAxis>
+                <Tooltip
+                  labelFormatter={displayData!.labelFormatter}
+                  formatter={displayData!.formatter}
+                />
+                <Line dataKey="power" stroke="rgb(30 58 138)" strokeWidth={2} />
+              </LineChart>
+            </ResponsiveContainer>
+          </>
+        )}
       </section>
     </Layout>
   );

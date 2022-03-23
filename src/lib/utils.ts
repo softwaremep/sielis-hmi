@@ -13,9 +13,6 @@ export function parseValue(value: number, unit?: string) {
   return parsedValue;
 }
 
-export function parseTimestamp(
-  timestamp: Date,
-  options: Intl.DateTimeFormatOptions
-) {
-  return new Intl.DateTimeFormat('id', options).format(timestamp);
-}
+export const timestampHourMinute = 'HH:mm';
+export const timestampHourMinuteSecond = 'HH:mm:ss';
+export const timestampDayMonthYear = 'dd MMM yyyy';

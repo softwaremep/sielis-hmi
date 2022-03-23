@@ -1,5 +1,12 @@
 import currency from 'currency.js';
-import { currencyOptions, parseTimestamp, parseValue } from './utils';
+import { format } from 'date-fns';
+import {
+  currencyOptions,
+  parseValue,
+  timestampDayMonthYear,
+  timestampHourMinute,
+  timestampHourMinuteSecond,
+} from './utils';
 
 export type RawNowData = {
   chart_data: {
@@ -67,8 +74,11 @@ export type NowData = {
 export type DisplayNowData = {
   chart: {
     power: string;
-    timestamp: string;
+    timestamp: number;
   }[];
+  tickFormatter: (tick: number) => string;
+  labelFormatter: (label: number) => string;
+  formatter: (value: number) => [string, string?];
   now: {
     date: string;
     time: string;
@@ -115,10 +125,12 @@ export async function fetchNowData(meterId: string): Promise<RawNowData> {
 
 export function parseRawNowData(data: RawNowData): NowData {
   return {
-    chart: data.chart_data.map(d => ({
-      power: d.daya,
-      timestamp: new Date(d.timestamp),
-    })),
+    chart: data.chart_data
+      .map(d => ({
+        power: d.daya,
+        timestamp: new Date(d.timestamp),
+      }))
+      .sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1)),
     now: new Date(),
     last: {
       A: data.last_data[0].A,
@@ -151,22 +163,14 @@ export function parseDisplayNowData(data: NowData): DisplayNowData {
   return {
     chart: data.chart.map(d => ({
       power: parseValue(d.power),
-      timestamp: parseTimestamp(d.timestamp, {
-        hour: 'numeric',
-        minute: 'numeric',
-      }),
+      timestamp: d.timestamp.getTime(),
     })),
+    tickFormatter: tick => format(tick, timestampHourMinute),
+    labelFormatter: label => format(label, timestampHourMinute),
+    formatter: value => [`${value} kW`, undefined],
     now: {
-      date: parseTimestamp(data.now, {
-        day: 'numeric',
-        month: 'long',
-        year: 'numeric',
-      }),
-      time: parseTimestamp(data.now, {
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      }),
+      date: format(data.now, timestampDayMonthYear),
+      time: format(data.now, timestampHourMinuteSecond),
     },
     last: {
       A: parseValue(data.last.A),
@@ -177,16 +181,8 @@ export function parseDisplayNowData(data: NowData): DisplayNowData {
       freq: parseValue(data.last.freq),
       volt: parseValue(data.last.volt),
       timestamp: {
-        date: parseTimestamp(data.last.timestamp, {
-          day: 'numeric',
-          month: 'long',
-          year: 'numeric',
-        }),
-        time: parseTimestamp(data.last.timestamp, {
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-        }),
+        date: format(data.last.timestamp, timestampDayMonthYear),
+        time: format(data.last.timestamp, timestampHourMinuteSecond),
       },
     },
     prevMonth: {
