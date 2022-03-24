@@ -5,6 +5,10 @@ export const currencyOptions = {
   precision: 0,
 };
 
+export function newUTCDate(date: string) {
+  return new Date(date.substring(0, date.length - 3));
+}
+
 export function parseValue(
   value: number,
   unit?: string,

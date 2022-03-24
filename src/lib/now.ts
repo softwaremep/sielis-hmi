@@ -3,6 +3,7 @@ import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import {
   currencyOptions,
+  newUTCDate,
   parseValue,
   timestampDayMonthYear,
   timestampHourMinute,
@@ -129,7 +130,7 @@ export function parseRawNowData(data: RawNowData): NowData {
     chart: data.chart_data
       .map(d => ({
         power: d.daya,
-        timestamp: new Date(d.timestamp),
+        timestamp: newUTCDate(d.timestamp),
       }))
       .sort((a, b) => (a.timestamp < b.timestamp ? -1 : 1)),
     now: new Date(),
@@ -141,7 +142,7 @@ export function parseRawNowData(data: RawNowData): NowData {
       PF: data.last_data[0].PF,
       freq: data.last_data[0].frekuensi,
       volt: data.last_data[0].tegangan,
-      timestamp: new Date(data.last_data[0].timestamp),
+      timestamp: newUTCDate(data.last_data[0].timestamp),
     },
     prevMonth: {
       dayCost: currency(data.prev_month_data[0].day_cost),

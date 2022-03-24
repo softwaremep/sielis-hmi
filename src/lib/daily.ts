@@ -1,7 +1,12 @@
 import currency from 'currency.js';
 import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
-import { currencyOptions, parseValue, timestampHourMinute } from './utils';
+import {
+  currencyOptions,
+  newUTCDate,
+  parseValue,
+  timestampHourMinute,
+} from './utils';
 
 export type RawDailyData = {
   chart_data: {
@@ -125,7 +130,7 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
       phase1: d.fasa1,
       phase2: d.fasa2,
       phase3: d.fasa3,
-      timestamp: new Date(d.timestamp.substring(0, d.timestamp.length - 3)),
+      timestamp: newUTCDate(d.timestamp),
     })),
     hourly: data.hourly_data.map(d => ({
       A: d.A,
@@ -134,7 +139,7 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
       A3: d.A3,
       energy: d.energi,
       PF: d.pf,
-      timestamp: new Date(d.timestamp),
+      timestamp: newUTCDate(d.timestamp),
       VLN: d.vln,
     })),
     prevMonth: {
