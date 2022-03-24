@@ -17,19 +17,7 @@ import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
 import { fetchNowData, parseDisplayNowData, parseRawNowData } from '../lib/now';
-
-// Area options
-const selectOptions = [
-  { value: '133', label: 'Labtek 5' },
-  { value: '135', label: 'Labtek 6' },
-  { value: '136', label: 'Labtek 7' },
-  { value: '138', label: 'Labtek 8' },
-  { value: '163', label: 'SBM' },
-  { value: '173', label: 'CRCS' },
-  { value: '174', label: 'CAS' },
-  { value: '175', label: 'CADL' },
-  { value: '176', label: 'CIBE' },
-];
+import { areaSelectOptions } from '../lib/utils';
 
 // Table columns
 const columns = [
@@ -65,7 +53,7 @@ const Home: NextPage = () => {
             <Select
               title="Area"
               placeholder="Pilih area"
-              options={selectOptions}
+              options={areaSelectOptions}
               value={meterId}
               onChange={e => setMeterId(e.target.value)}
             />
