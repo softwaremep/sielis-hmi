@@ -166,6 +166,7 @@ const Home: NextPage = () => {
                   tickFormatter={displayData!.tickFormatter}
                   type="number"
                   scale="time"
+                  padding="gap"
                 >
                   <Label position="insideBottom" dy={25}>
                     Waktu
