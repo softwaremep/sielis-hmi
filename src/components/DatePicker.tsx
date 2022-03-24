@@ -1,19 +1,22 @@
 import 'react-datepicker/dist/react-datepicker.css';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { id } from 'date-fns/locale';
 import { timestampDayMonthYear } from '../lib/utils';
 
 type CustomDateInputProps = {
+  active: boolean;
   placeholder: string;
   value: string | undefined;
   onClick: (e: React.FormEvent<HTMLButtonElement>) => void;
 };
 
 const CustomDateInput = forwardRef<HTMLButtonElement, CustomDateInputProps>(
-  ({ placeholder, value, onClick }, ref) => (
+  ({ active, placeholder, value, onClick }, ref) => (
     <button
-      className="w-72 cursor-pointer rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5 text-left"
+      className={`${
+        active ? 'ring-1 ring-blue-900' : ''
+      } w-72 cursor-pointer rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5 text-left`}
       ref={ref}
       onClick={onClick}
     >
@@ -34,6 +37,7 @@ type DatePickerProps = {
 };
 
 function DatePicker({ title, placeholder, date, onChange }: DatePickerProps) {
+  const [active, setActive] = useState(false);
   return (
     <div className="space-y-2.5">
       <h3 className="text-lg font-semibold">{title}</h3>
@@ -42,8 +46,10 @@ function DatePicker({ title, placeholder, date, onChange }: DatePickerProps) {
         dateFormat={timestampDayMonthYear}
         locale={id}
         onChange={onChange}
+        onCalendarOpen={() => setActive(true)}
+        onCalendarClose={() => setActive(false)}
         // @ts-ignore
-        customInput={<CustomDateInput />}
+        customInput={<CustomDateInput active={active} />}
         placeholderText={placeholder}
       />
     </div>
