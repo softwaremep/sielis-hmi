@@ -8,7 +8,7 @@ type Props = {
 function Message({ type, className }: Props) {
   return (
     <div
-      className={`${className} flex gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
+      className={`${className} flex items-center gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
     >
       <Icon
         icon={type === 'positive' ? 'bx:line-chart' : 'bx:line-chart-down'}

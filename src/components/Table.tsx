@@ -15,10 +15,10 @@ function Table<T extends object>({ columns, data, className }: Props<T>) {
 
   return (
     <div
-      className={`${className} mx-auto w-fit overflow-x-auto rounded-sm border border-stone-300 shadow`}
+      className={`${className} mx-auto w-full overflow-x-auto rounded-sm border border-stone-300 shadow`}
     >
       <table
-        className="table-auto border-collapse text-sm"
+        className="w-full table-auto border-collapse text-sm"
         {...getTableProps()}
       >
         <thead>

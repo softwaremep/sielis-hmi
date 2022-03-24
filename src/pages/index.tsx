@@ -58,7 +58,7 @@ const Home: NextPage = () => {
     <Layout title="Beranda">
       <section>
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
-        <div className="mt-8 flex items-start justify-between">
+        <div className="mt-8 flex flex-col items-start justify-between gap-8 sm:flex-row">
           <section className="space-y-8">
             <Select
               title="Area"
@@ -92,10 +92,10 @@ const Home: NextPage = () => {
               </p>
             )}
           </section>
-          <section className="grid grid-cols-3 gap-x-8">
+          <section className="grid grid-cols-1 gap-y-2.5 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
             {status === 'success' && (
               <>
-                <h3 className="col-span-3 mb-2.5 text-lg font-semibold">
+                <h3 className="text-lg font-semibold md:col-span-2 lg:col-span-3">
                   Hari ini
                 </h3>
                 <Stat
@@ -111,7 +111,7 @@ const Home: NextPage = () => {
                   variant="aside"
                   unit="jam"
                 />
-                <h3 className="col-span-3 mt-8 mb-2.5 text-lg font-semibold">
+                <h3 className="mt-6 text-lg font-semibold md:col-span-2 lg:col-span-3">
                   Bulan lalu
                 </h3>
                 <Stat
@@ -140,7 +140,7 @@ const Home: NextPage = () => {
                       ? 'positive'
                       : 'negative'
                   }
-                  className="col-span-2 mt-8"
+                  className="mt-8 md:col-span-2"
                 />
               </>
             )}

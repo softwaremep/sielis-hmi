@@ -38,22 +38,34 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
         <title>{title} | SiElis - Lab Manajemen Energi Teknik Fisika ITB</title>
       </Head>
       <div className="flex min-h-screen flex-col gap-14">
-        <header className="flex items-center border-b border-b-stone-200 bg-stone-50 px-6 py-3 pl-32">
-          <div className="mr-6 text-xl font-semibold text-blue-900">SiElis</div>
-          <div>
-            <h1 className="text-xl font-semibold">
-              Sistem Informasi Energi Listrik
-            </h1>
-            <div className="font-medium">Institut Teknologi Bandung</div>
+        <header className="border-b border-b-stone-200 bg-stone-50">
+          <div className="container mx-auto flex max-w-screen-lg items-center px-6 py-3">
+            <div className="mr-6 text-xl font-semibold text-blue-900">
+              SiElis
+            </div>
+            <div className="hidden md:block">
+              <h1 className="font-semibold lg:text-xl">
+                Sistem Informasi Energi Listrik
+              </h1>
+              <div className="text-sm font-medium lg:text-base">
+                Institut Teknologi Bandung
+              </div>
+            </div>
+            <nav className="ml-5 hidden gap-4 text-blue-900 sm:flex lg:ml-20 lg:gap-8">
+              {navList}
+            </nav>
           </div>
-          <nav className="ml-20 flex gap-8 text-blue-900">{navList}</nav>
         </header>
-        <main>
-          <div className="mx-auto max-w-screen-lg shrink-0">{children}</div>
+        <main className="container mx-auto max-w-screen-lg px-6">
+          {children}
         </main>
-        <footer className="mt-auto border-t border-t-stone-200 bg-stone-50 py-4 pl-32 text-sm">
-          <p>Dikembangkan oleh</p>
-          <p className="font-medium">Lab Manajemen Energi Teknik Fisika ITB</p>
+        <footer className="mt-auto border-t border-t-stone-200 bg-stone-50">
+          <p className="container mx-auto max-w-screen-lg py-3 px-6 text-sm">
+            Dikembangkan oleh
+            <div className="font-medium">
+              Lab Manajemen Energi Teknik Fisika ITB
+            </div>
+          </p>
         </footer>
       </div>
     </>
