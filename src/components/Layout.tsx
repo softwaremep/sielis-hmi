@@ -62,9 +62,9 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
         <footer className="mt-auto border-t border-t-stone-200 bg-stone-50">
           <p className="container mx-auto max-w-screen-lg py-3 px-6 text-sm">
             Dikembangkan oleh
-            <div className="font-medium">
+            <span className="block font-medium">
               Lab Manajemen Energi Teknik Fisika ITB
-            </div>
+            </span>
           </p>
         </footer>
       </div>
