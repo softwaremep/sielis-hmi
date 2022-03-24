@@ -107,6 +107,7 @@ function Daily() {
                       ? 'positive'
                       : 'negative'
                   }
+                  variant="daily"
                   className="mt-8 md:col-span-2"
                 />
               </>

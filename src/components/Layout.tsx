@@ -56,7 +56,7 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
             </nav>
           </div>
         </header>
-        <main className="container mx-auto max-w-screen-lg px-6">
+        <main className="container mx-auto px-6 lg:max-w-screen-lg">
           {children}
         </main>
         <footer className="mt-auto border-t border-t-stone-200 bg-stone-50">

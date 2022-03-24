@@ -130,6 +130,7 @@ const Home: NextPage = () => {
                       ? 'positive'
                       : 'negative'
                   }
+                  variant="now"
                   className="mt-8 md:col-span-2"
                 />
               </>
