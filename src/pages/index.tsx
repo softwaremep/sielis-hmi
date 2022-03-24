@@ -49,6 +49,8 @@ const Home: NextPage = () => {
     () => fetchNowData(meterId),
     {
       enabled: meterId !== 'default',
+      refetchInterval: Number(process.env.NEXT_PUBLIC_REFETCH_INTERVAL),
+      refetchOnWindowFocus: false,
     }
   );
   const data = rawData ? parseRawNowData(rawData) : undefined;
