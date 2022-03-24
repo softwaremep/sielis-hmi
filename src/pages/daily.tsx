@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { useQuery } from 'react-query';
 import DatePicker from '../components/DatePicker';
 import Layout from '../components/Layout';
+import Message from '../components/Message';
 import Select from '../components/Select';
+import Stat from '../components/Stat';
 import {
   fetchDailyData,
   parseDisplayDailyData,
@@ -14,10 +16,10 @@ function Daily() {
   const [meterId, setMeterId] = useState('default');
   const [date, setDate] = useState<Date | null>(null);
   const { status, data: rawData } = useQuery(
-    ['now', meterId],
-    () => fetchDailyData(meterId),
+    ['daily', meterId, date],
+    () => fetchDailyData(meterId, date!),
     {
-      enabled: meterId !== 'default',
+      enabled: meterId !== 'default' && !!date,
       refetchInterval: Number(process.env.NEXT_PUBLIC_REFETCH_INTERVAL),
       refetchOnWindowFocus: false,
     }
@@ -51,6 +53,52 @@ function Daily() {
               <p className="font-medium text-red-500">
                 Data tidak dapat terambil
               </p>
+            )}
+          </section>
+          <section className="grid grid-cols-1 gap-y-2.5 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+            {status === 'success' && (
+              <>
+                <h3 className="text-lg font-semibold md:col-span-2 lg:col-span-3">
+                  Hari ini
+                </h3>
+                <Stat
+                  title="Total"
+                  primary={displayData!.today.totalCost}
+                  secondary={displayData!.today.totalPower}
+                  variant="aside"
+                />
+                <Stat
+                  title="Rata-rata"
+                  primary={displayData!.today.averageCost}
+                  secondary={displayData!.today.averagePower}
+                  variant="aside"
+                  unit="jam"
+                />
+                <h3 className="mt-6 text-lg font-semibold md:col-span-2 lg:col-span-3">
+                  Bulan lalu
+                </h3>
+                <Stat
+                  title="Total"
+                  primary={displayData!.prevMonth.totalCost}
+                  secondary={displayData!.prevMonth.totalPower}
+                  variant="aside"
+                />
+                <Stat
+                  title="Rata-rata per hari"
+                  primary={displayData!.prevMonth.averageCost}
+                  secondary={displayData!.prevMonth.averagePower}
+                  variant="aside"
+                  unit="hari"
+                />
+                <Message
+                  type={
+                    data!.today.averageCost < data!.prevMonth.averageCost
+                      ? 'positive'
+                      : 'negative'
+                  }
+                  className="mt-8 md:col-span-2"
+                />
+              </>
             )}
           </section>
         </div>

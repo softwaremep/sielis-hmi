@@ -1,4 +1,6 @@
 import currency from 'currency.js';
+import { format } from 'date-fns';
+import { currencyOptions, parseValue } from './utils';
 
 export type RawDailyData = {
   chart_data: {
@@ -96,14 +98,69 @@ export type DisplayDailyData = {
   };
 };
 
-export async function fetchDailyData(meterId: string): Promise<any> {
-  return null;
+export async function fetchDailyData(
+  meterId: string,
+  date: Date
+): Promise<RawDailyData> {
+  const queryParams = new URLSearchParams({
+    meter_id: meterId,
+    date: format(date, 'yyyy-MM-dd'),
+  });
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_DATA_PROVIDER}/daily?${queryParams.toString()}`
+  );
+  if (!response.ok) {
+    throw new Error('Error, data could not be fetched');
+  }
+  return response.json();
 }
 
-export function parseRawDailyData(data: any) {
-  return null;
+export function parseRawDailyData(data: RawDailyData): DailyData {
+  return {
+    chart: data.chart_data.map(d => ({
+      phase1: d.fasa1,
+      phase2: d.fasa2,
+      phase3: d.fasa3,
+      timestamp: new Date(d.timestamp),
+    })),
+    hourly: data.hourly_data.map(d => ({
+      A: d.A,
+      A1: d.A1,
+      A2: d.A2,
+      A3: d.A3,
+      energy: d.energi,
+      PF: d.pf,
+      timestamp: new Date(d.timestamp),
+      VLN: d.vln,
+    })),
+    prevMonth: {
+      averageCost: currency(data.prev_month_data[0].avg_cost),
+      averagePower: data.prev_month_data[0].avg_daya,
+      totalCost: currency(data.prev_month_data[0].total_cost),
+      totalPower: data.prev_month_data[0].total_daya,
+    },
+    today: {
+      averageCost: currency(data.today_data[0].avg_cost),
+      averagePower: data.today_data[0].avg_daya,
+      totalCost: currency(data.today_data[0].total_cost),
+      totalPower: data.today_data[0].total_daya,
+    },
+  };
 }
 
-export function parseDisplayDailyData(data: any) {
-  return null;
+export function parseDisplayDailyData(data: DailyData) {
+  return {
+    prevMonth: {
+      averageCost: data.prevMonth.averageCost.format(currencyOptions),
+      averagePower: parseValue(data.prevMonth.averagePower, 'kWh'),
+      totalCost: data.prevMonth.totalCost.format(currencyOptions),
+      totalPower: parseValue(data.prevMonth.totalPower, 'kWh'),
+    },
+    today: {
+      averageCost: data.today.averageCost.format(currencyOptions),
+      averagePower: parseValue(data.today.averagePower, 'kWh'),
+      totalCost: data.today.totalCost.format(currencyOptions),
+      totalPower: parseValue(data.today.totalPower, 'kWh'),
+    },
+  };
 }
