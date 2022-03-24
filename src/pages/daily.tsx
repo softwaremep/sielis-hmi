@@ -1,5 +1,16 @@
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import {
+  Bar,
+  BarChart,
+  CartesianGrid,
+  Label,
+  Legend,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from 'recharts';
 import DatePicker from '../components/DatePicker';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
@@ -102,6 +113,64 @@ function Daily() {
             )}
           </section>
         </div>
+      </section>
+
+      <section className="mt-16">
+        {status === 'success' && (
+          <>
+            <h2 className="text-xl font-bold">
+              Konsumsi Energi Listrik (kWh) setiap jamnya
+            </h2>
+            <ResponsiveContainer aspect={3} className="mt-8">
+              <BarChart
+                data={displayData!.chart}
+                margin={{ top: 5, right: 5, bottom: 25, left: 5 }}
+              >
+                <CartesianGrid />
+                <XAxis
+                  dataKey="timestamp"
+                  domain={['dataMin', 'dataMax']}
+                  tickFormatter={displayData!.tickFormatter}
+                  type="number"
+                  scale="time"
+                  padding="gap"
+                >
+                  <Label position="insideBottom" dy={20}>
+                    Waktu
+                  </Label>
+                </XAxis>
+                <YAxis>
+                  <Label position="insideLeft" angle={-90} dy={110}>
+                    Konsumsi Energi Listrik (kWh)
+                  </Label>
+                </YAxis>
+                <Tooltip
+                  labelFormatter={displayData!.labelFormatter}
+                  formatter={displayData!.formatter}
+                />
+                <Legend iconType="circle" wrapperStyle={{ bottom: 0 }} />
+                <Bar
+                  name="Fasa 1"
+                  dataKey="phase1"
+                  stackId="chart"
+                  fill="#1b998b"
+                />
+                <Bar
+                  name="Fasa 2"
+                  dataKey="phase2"
+                  stackId="chart"
+                  fill="#2e294e"
+                />
+                <Bar
+                  name="Fasa 3"
+                  dataKey="phase3"
+                  stackId="chart"
+                  fill="#f46036"
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          </>
+        )}
       </section>
     </Layout>
   );

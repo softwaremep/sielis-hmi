@@ -1,6 +1,7 @@
 import currency from 'currency.js';
 import { format } from 'date-fns';
-import { currencyOptions, parseValue } from './utils';
+import { id } from 'date-fns/locale';
+import { currencyOptions, parseValue, timestampHourMinute } from './utils';
 
 export type RawDailyData = {
   chart_data: {
@@ -71,6 +72,9 @@ export type DisplayDailyData = {
     phase3: string;
     timestamp: number;
   }[];
+  tickFormatter: (tick: number) => string;
+  labelFormatter: (label: number) => string;
+  formatter: (value: number, name: string) => [string, string?];
   hourly: {
     A: string;
     A1: string;
@@ -121,7 +125,7 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
       phase1: d.fasa1,
       phase2: d.fasa2,
       phase3: d.fasa3,
-      timestamp: new Date(d.timestamp),
+      timestamp: new Date(d.timestamp.substring(0, d.timestamp.length - 3)),
     })),
     hourly: data.hourly_data.map(d => ({
       A: d.A,
@@ -150,6 +154,15 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
 
 export function parseDisplayDailyData(data: DailyData) {
   return {
+    chart: data.chart.map(d => ({
+      phase1: parseValue(d.phase1, undefined, '.'),
+      phase2: parseValue(d.phase2, undefined, '.'),
+      phase3: parseValue(d.phase3, undefined, '.'),
+      timestamp: d.timestamp.getTime(),
+    })),
+    tickFormatter: tick => format(tick, timestampHourMinute, { locale: id }),
+    labelFormatter: label => format(label, timestampHourMinute, { locale: id }),
+    formatter: (value, name) => [`${value} kWh`, name],
     prevMonth: {
       averageCost: data.prevMonth.averageCost.format(currencyOptions),
       averagePower: parseValue(data.prevMonth.averagePower, 'kWh'),
