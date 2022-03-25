@@ -42,7 +42,7 @@ function Daily() {
     <Layout title="Harian">
       <section>
         <h2 className="text-xl font-bold">Konsumsi Energi Listrik Harian</h2>
-        <div className="mt-8 flex flex-col items-start justify-between gap-8 sm:flex-row">
+        <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-0">
           <section className="space-y-8">
             <Select
               title="Area"
@@ -66,41 +66,43 @@ function Daily() {
               </p>
             )}
           </section>
-          <section className="grid grid-cols-1 gap-y-2.5 gap-x-8 md:grid-cols-2 lg:grid-cols-3">
+          <section className="lg:mx-auto">
             {status === 'success' && (
               <>
-                <h3 className="text-lg font-semibold md:col-span-2 lg:col-span-3">
-                  Hari ini
-                </h3>
-                <Stat
-                  title="Total"
-                  primary={displayData!.today.totalCost}
-                  secondary={displayData!.today.totalPower}
-                  variant="aside"
-                />
-                <Stat
-                  title="Rata-rata"
-                  primary={displayData!.today.averageCost}
-                  secondary={displayData!.today.averagePower}
-                  variant="aside"
-                  unit="jam"
-                />
-                <h3 className="mt-6 text-lg font-semibold md:col-span-2 lg:col-span-3">
-                  Bulan lalu
-                </h3>
-                <Stat
-                  title="Total"
-                  primary={displayData!.prevMonth.totalCost}
-                  secondary={displayData!.prevMonth.totalPower}
-                  variant="aside"
-                />
-                <Stat
-                  title="Rata-rata per hari"
-                  primary={displayData!.prevMonth.averageCost}
-                  secondary={displayData!.prevMonth.averagePower}
-                  variant="aside"
-                  unit="hari"
-                />
+                <div className="grid grid-cols-1 gap-y-2.5 gap-x-8 md:grid-cols-2 lg:grid-cols-[auto_auto]">
+                  <h3 className="text-lg font-semibold md:col-span-2 lg:col-span-3">
+                    Hari ini
+                  </h3>
+                  <Stat
+                    title="Total"
+                    primary={displayData!.today.totalCost}
+                    secondary={displayData!.today.totalPower}
+                    variant="aside"
+                  />
+                  <Stat
+                    title="Rata-rata"
+                    primary={displayData!.today.averageCost}
+                    secondary={displayData!.today.averagePower}
+                    variant="aside"
+                    unit="jam"
+                  />
+                  <h3 className="mt-6 text-lg font-semibold md:col-span-2 lg:col-span-3">
+                    Bulan lalu
+                  </h3>
+                  <Stat
+                    title="Total"
+                    primary={displayData!.prevMonth.totalCost}
+                    secondary={displayData!.prevMonth.totalPower}
+                    variant="aside"
+                  />
+                  <Stat
+                    title="Rata-rata per hari"
+                    primary={displayData!.prevMonth.averageCost}
+                    secondary={displayData!.prevMonth.averagePower}
+                    variant="aside"
+                    unit="hari"
+                  />
+                </div>
                 <Message
                   type={
                     data!.today.averageCost < data!.prevMonth.averageCost
@@ -108,7 +110,7 @@ function Daily() {
                       : 'negative'
                   }
                   variant="daily"
-                  className="mt-8 md:col-span-2"
+                  className="mt-8"
                 />
               </>
             )}

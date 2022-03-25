@@ -14,7 +14,7 @@ function Message({ type, variant, className }: Props) {
       : `Konsumsi harian lebih ${verdict} dibandingkan rata-rata per hari bulan lalu`;
   return (
     <div
-      className={`${className} flex items-center gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
+      className={`${className} flex max-w-[40ch] items-center gap-2.5 rounded-sm border border-stone-200 bg-stone-50 p-4 font-medium`}
     >
       <Icon
         icon={type === 'positive' ? 'bx:line-chart' : 'bx:line-chart-down'}
