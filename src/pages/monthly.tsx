@@ -16,12 +16,25 @@ import DatePicker from '../components/DatePicker';
 import Layout from '../components/Layout';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
+import Table from '../components/Table';
 import {
   fetchMonthlyData,
   parseDisplayMonthlyData,
   parseRawMonthlyData,
 } from '../lib/monthly';
 import { areaSelectOptions } from '../lib/utils';
+
+// Table columns
+const columns = [
+  { Header: 'Tanggal', accessor: 'timestamp' },
+  { Header: 'Penggunaan (Rp)', accessor: 'cost' },
+  { Header: 'Energi (kWh)', accessor: 'energy' },
+  { Header: 'Tegangan (VLN)', accessor: 'VLN' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Fasa 1 (kWh)', accessor: 'phase1' },
+  { Header: 'Fasa 2 (kWh)', accessor: 'phase2' },
+  { Header: 'Fasa 3 (kWh)', accessor: 'phase3' },
+] as const;
 
 const Monthly: NextPage = () => {
   const [meterId, setMeterId] = useState('default');
@@ -150,6 +163,11 @@ const Monthly: NextPage = () => {
                 />
               </BarChart>
             </ResponsiveContainer>
+            <Table
+              className="mt-8"
+              columns={columns}
+              data={displayData!.daily}
+            />
           </>
         )}
       </section>

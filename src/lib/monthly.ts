@@ -68,6 +68,16 @@ export type DisplayMonthlyData = {
   tickFormatter: (value: any, index: number) => string;
   labelFormatter: (label: number) => string;
   formatter: (value: number, name: string) => [string, string?];
+  daily: {
+    cost: string;
+    energy: string;
+    phase1: string;
+    phase2: string;
+    phase3: string;
+    PF: string;
+    timestamp: string;
+    VLN: string;
+  }[];
   month: {
     averageCost: string;
     averagePower: string;
@@ -132,6 +142,16 @@ export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
     labelFormatter: label =>
       format(label, timestampDayMonthYear, { locale: id }),
     formatter: (value, name) => [`${value} kWh`, name],
+    daily: data.daily.map(d => ({
+      cost: d.cost.format({ ...currencyOptions, symbol: '' }),
+      energy: parseValue(d.energy),
+      phase1: parseValue(d.phase1),
+      phase2: parseValue(d.phase2),
+      phase3: parseValue(d.phase3),
+      PF: parseValue(d.PF),
+      timestamp: format(d.timestamp, 'd', { locale: id }),
+      VLN: parseValue(d.VLN),
+    })),
     month: {
       averageCost: data.month.averageCost.format(currencyOptions),
       averagePower: parseValue(data.month.averagePower, 'kWh'),
