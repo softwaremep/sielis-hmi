@@ -1,6 +1,12 @@
 import currency from 'currency.js';
 import { format } from 'date-fns';
-import { currencyOptions, newUTCDate, parseValue } from './utils';
+import { id } from 'date-fns/locale';
+import {
+  currencyOptions,
+  newUTCDate,
+  parseValue,
+  timestampDayMonthYear,
+} from './utils';
 
 export type RawMonthlyData = {
   chart_data: {
@@ -53,6 +59,15 @@ export type MonthlyData = {
 };
 
 export type DisplayMonthlyData = {
+  chart: {
+    phase1: string;
+    phase2: string;
+    phase3: string;
+    timestamp: number;
+  }[];
+  tickFormatter: (value: any, index: number) => string;
+  labelFormatter: (label: number) => string;
+  formatter: (value: number, name: string) => [string, string?];
   month: {
     averageCost: string;
     averagePower: string;
@@ -107,6 +122,16 @@ export function parseRawMonthlyData(data: RawMonthlyData): MonthlyData {
 
 export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
   return {
+    chart: data.chart.map(d => ({
+      phase1: parseValue(d.phase1, undefined, '.'),
+      phase2: parseValue(d.phase2, undefined, '.'),
+      phase3: parseValue(d.phase3, undefined, '.'),
+      timestamp: d.timestamp.getTime(),
+    })),
+    tickFormatter: (value, _) => format(value, 'd', { locale: id }),
+    labelFormatter: label =>
+      format(label, timestampDayMonthYear, { locale: id }),
+    formatter: (value, name) => [`${value} kWh`, name],
     month: {
       averageCost: data.month.averageCost.format(currencyOptions),
       averagePower: parseValue(data.month.averagePower, 'kWh'),
