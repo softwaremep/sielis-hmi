@@ -1,3 +1,4 @@
+import type { NextPage } from 'next';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
 import {
@@ -36,7 +37,7 @@ const columns = [
   { Header: 'Arus (A3)', accessor: 'A3' },
 ] as const;
 
-function Daily() {
+const Daily: NextPage = () => {
   const [meterId, setMeterId] = useState('default');
   const [date, setDate] = useState<Date | null>(null);
   const { status, data: rawData } = useQuery(
@@ -198,5 +199,6 @@ function Daily() {
       </section>
     </Layout>
   );
-}
+};
+
 export default Daily;
