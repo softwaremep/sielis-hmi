@@ -3,9 +3,10 @@ import { format } from 'date-fns';
 import { id } from 'date-fns/locale';
 import {
   currencyOptions,
+  getTimestampTick,
   newUTCDate,
   parseValue,
-  timestampHourMinute,
+  timestampFullDateTime,
 } from './utils';
 
 export type RawDailyData = {
@@ -77,7 +78,7 @@ export type DisplayDailyData = {
     phase3: string;
     timestamp: number;
   }[];
-  tickFormatter: (tick: number) => string;
+  tickFormatter: (value: any, index: number) => string;
   labelFormatter: (label: number) => string;
   formatter: (value: number, name: string) => [string, string?];
   hourly: {
@@ -162,8 +163,9 @@ export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
       phase3: parseValue(d.phase3, undefined, '.'),
       timestamp: d.timestamp.getTime(),
     })),
-    tickFormatter: tick => format(tick, timestampHourMinute, { locale: id }),
-    labelFormatter: label => format(label, timestampHourMinute, { locale: id }),
+    tickFormatter: (value, _) => getTimestampTick(value),
+    labelFormatter: label =>
+      format(label, timestampFullDateTime, { locale: id }),
     formatter: (value, name) => [`${value} kWh`, name],
     hourly: data.hourly.map(d => ({
       A: parseValue(d.A),
@@ -172,7 +174,7 @@ export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
       A3: parseValue(d.A3),
       energy: parseValue(d.energy),
       PF: parseValue(d.PF),
-      timestamp: format(d.timestamp, timestampHourMinute),
+      timestamp: getTimestampTick(d.timestamp.getTime()),
       VLN: parseValue(d.VLN),
     })),
     prevMonth: {

@@ -1,3 +1,5 @@
+import { isWithinInterval, set } from 'date-fns';
+
 export const currencyOptions = {
   symbol: 'Rp',
   separator: '.',
@@ -21,9 +23,23 @@ export function parseValue(
   return parsedValue;
 }
 
+export function getTimestampTick(timestamp: number) {
+  const date = new Date(timestamp);
+  let start, end;
+  for (let hours = 1; hours <= 24; hours++) {
+    start = set(date, { hours: hours - 1, minutes: 0, seconds: 0 });
+    end = set(date, { hours, minutes: 0, seconds: 0 });
+    if (isWithinInterval(date, { start, end })) {
+      return hours.toString();
+    }
+  }
+  throw new Error(`Invalid timestamp: ${timestamp}`);
+}
+
 export const timestampHourMinute = 'HH:mm';
 export const timestampHourMinuteSecond = 'HH:mm:ss';
 export const timestampDayMonthYear = 'dd MMMM yyyy';
+export const timestampFullDateTime = 'dd MMMM yyyy HH:mm:ss';
 
 // Area options
 export const areaSelectOptions = [

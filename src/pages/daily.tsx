@@ -164,7 +164,10 @@ function Daily() {
                   labelFormatter={displayData!.labelFormatter}
                   formatter={displayData!.formatter}
                 />
-                <Legend iconType="circle" wrapperStyle={{ bottom: 0 }} />
+                <Legend
+                  iconType="circle"
+                  wrapperStyle={{ left: 40, bottom: 0 }}
+                />
                 <Bar
                   name="Fasa 1"
                   dataKey="phase1"
