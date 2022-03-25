@@ -38,6 +38,7 @@ export function getTimestampTick(timestamp: number) {
 
 export const timestampHourMinute = 'HH:mm';
 export const timestampHourMinuteSecond = 'HH:mm:ss';
+export const timestampMonthYear = 'MMMM yyyy';
 export const timestampDayMonthYear = 'dd MMMM yyyy';
 export const timestampFullDateTime = 'dd MMMM yyyy HH:mm:ss';
 

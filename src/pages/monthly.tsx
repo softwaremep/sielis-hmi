@@ -67,8 +67,9 @@ const Monthly: NextPage = () => {
               onChange={e => setMeterId(e.target.value)}
             />
             <DatePicker
-              title="Tanggal"
-              placeholder="Pilih tanggal"
+              monthPicker
+              title="Bulan"
+              placeholder="Pilih bulan"
               date={date}
               onChange={date => setDate(date)}
             />

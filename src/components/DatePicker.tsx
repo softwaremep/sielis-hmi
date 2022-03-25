@@ -2,7 +2,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { forwardRef, useState } from 'react';
 import ReactDatePicker from 'react-datepicker';
 import { id } from 'date-fns/locale';
-import { timestampDayMonthYear } from '../lib/utils';
+import { timestampDayMonthYear, timestampMonthYear } from '../lib/utils';
 
 type CustomDateInputProps = {
   active: boolean;
@@ -27,6 +27,7 @@ const CustomDateInput = forwardRef<HTMLButtonElement, CustomDateInputProps>(
 CustomDateInput.displayName = 'CustomDateInput';
 
 type DatePickerProps = {
+  monthPicker?: boolean;
   title: string;
   placeholder: string;
   date: Date | null;
@@ -36,7 +37,13 @@ type DatePickerProps = {
   ) => void;
 };
 
-function DatePicker({ title, placeholder, date, onChange }: DatePickerProps) {
+function DatePicker({
+  monthPicker = false,
+  title,
+  placeholder,
+  date,
+  onChange,
+}: DatePickerProps) {
   const [active, setActive] = useState(false);
   return (
     <div className="space-y-2.5">
@@ -44,7 +51,8 @@ function DatePicker({ title, placeholder, date, onChange }: DatePickerProps) {
       <div>
         <ReactDatePicker
           selected={date}
-          dateFormat={timestampDayMonthYear}
+          showMonthYearPicker={monthPicker}
+          dateFormat={monthPicker ? timestampMonthYear : timestampDayMonthYear}
           locale={id}
           onChange={onChange}
           onCalendarOpen={() => setActive(true)}
