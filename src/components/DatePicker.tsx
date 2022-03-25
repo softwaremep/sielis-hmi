@@ -15,8 +15,8 @@ const CustomDateInput = forwardRef<HTMLButtonElement, CustomDateInputProps>(
   ({ active, placeholder, value, onClick }, ref) => (
     <button
       className={`${
-        active ? 'ring-1 ring-blue-900' : ''
-      } w-72 cursor-pointer rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5 text-left`}
+        active ? 'border-blue-900 ring-1 ring-blue-900' : ''
+      } w-72 cursor-pointer rounded-sm border border-stone-200 bg-stone-50 px-3 py-1.5 text-left shadow`}
       ref={ref}
       onClick={onClick}
     >
