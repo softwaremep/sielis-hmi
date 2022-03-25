@@ -16,12 +16,25 @@ import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
+import Table from '../components/Table';
 import {
   fetchDailyData,
   parseDisplayDailyData,
   parseRawDailyData,
 } from '../lib/daily';
 import { areaSelectOptions } from '../lib/utils';
+
+// Table columns
+const columns = [
+  { Header: 'Jam', accessor: 'timestamp' },
+  { Header: 'Energi (kWh)', accessor: 'energy' },
+  { Header: 'Tegangan (VLN)', accessor: 'VLN' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Arus (A)', accessor: 'A' },
+  { Header: 'Arus (A1)', accessor: 'A1' },
+  { Header: 'Arus (A2)', accessor: 'A2' },
+  { Header: 'Arus (A3)', accessor: 'A3' },
+] as const;
 
 function Daily() {
   const [meterId, setMeterId] = useState('default');
@@ -172,6 +185,11 @@ function Daily() {
                 />
               </BarChart>
             </ResponsiveContainer>
+            <Table
+              className="mt-8"
+              columns={columns}
+              data={displayData!.hourly}
+            />
           </>
         )}
       </section>

@@ -87,10 +87,7 @@ export type DisplayDailyData = {
     A3: string;
     energy: string;
     PF: string;
-    timestamp: {
-      date: string;
-      time: string;
-    };
+    timestamp: string;
     VLN: string;
   }[];
   prevMonth: {
@@ -157,7 +154,7 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
   };
 }
 
-export function parseDisplayDailyData(data: DailyData) {
+export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
   return {
     chart: data.chart.map(d => ({
       phase1: parseValue(d.phase1, undefined, '.'),
@@ -168,6 +165,16 @@ export function parseDisplayDailyData(data: DailyData) {
     tickFormatter: tick => format(tick, timestampHourMinute, { locale: id }),
     labelFormatter: label => format(label, timestampHourMinute, { locale: id }),
     formatter: (value, name) => [`${value} kWh`, name],
+    hourly: data.hourly.map(d => ({
+      A: parseValue(d.A),
+      A1: parseValue(d.A1),
+      A2: parseValue(d.A2),
+      A3: parseValue(d.A3),
+      energy: parseValue(d.energy),
+      PF: parseValue(d.PF),
+      timestamp: format(d.timestamp, timestampHourMinute),
+      VLN: parseValue(d.VLN),
+    })),
     prevMonth: {
       averageCost: data.prevMonth.averageCost.format(currencyOptions),
       averagePower: parseValue(data.prevMonth.averagePower, 'kWh'),
