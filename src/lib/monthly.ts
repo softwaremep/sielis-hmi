@@ -160,3 +160,8 @@ export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
     },
   };
 }
+
+export function getMonthlyCsvFilename(meterId: string, date: Date) {
+  const formattedDate = format(date, 'yyyy-MM', { locale: id });
+  return `sielis_monthly_${meterId}_${formattedDate}.csv`;
+}

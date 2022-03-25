@@ -13,6 +13,7 @@ import {
   YAxis,
 } from 'recharts';
 import DatePicker from '../components/DatePicker';
+import ExportButton from '../components/ExportButton';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
 import Select from '../components/Select';
@@ -20,6 +21,7 @@ import Stat from '../components/Stat';
 import Table from '../components/Table';
 import {
   fetchDailyData,
+  getDailyCsvFilename,
   parseDisplayDailyData,
   parseRawDailyData,
 } from '../lib/daily';
@@ -71,6 +73,12 @@ const Daily: NextPage = () => {
               date={date}
               onChange={date => setDate(date)}
             />
+            {status === 'success' && (
+              <ExportButton
+                data={rawData!.hourly_data}
+                filename={getDailyCsvFilename(meterId!, date!)}
+              />
+            )}
             {status === 'loading' && (
               <p className="font-medium text-blue-900">Loading...</p>
             )}

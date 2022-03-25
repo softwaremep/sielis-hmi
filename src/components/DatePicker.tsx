@@ -41,17 +41,19 @@ function DatePicker({ title, placeholder, date, onChange }: DatePickerProps) {
   return (
     <div className="space-y-2.5">
       <h3 className="text-lg font-semibold">{title}</h3>
-      <ReactDatePicker
-        selected={date}
-        dateFormat={timestampDayMonthYear}
-        locale={id}
-        onChange={onChange}
-        onCalendarOpen={() => setActive(true)}
-        onCalendarClose={() => setActive(false)}
-        // @ts-ignore
-        customInput={<CustomDateInput active={active} />}
-        placeholderText={placeholder}
-      />
+      <div>
+        <ReactDatePicker
+          selected={date}
+          dateFormat={timestampDayMonthYear}
+          locale={id}
+          onChange={onChange}
+          onCalendarOpen={() => setActive(true)}
+          onCalendarClose={() => setActive(false)}
+          // @ts-ignore
+          customInput={<CustomDateInput active={active} />}
+          placeholderText={placeholder}
+        />
+      </div>
     </div>
   );
 }

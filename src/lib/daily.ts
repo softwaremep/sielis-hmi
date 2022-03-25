@@ -191,3 +191,8 @@ export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
     },
   };
 }
+
+export function getDailyCsvFilename(meterId: string, date: Date) {
+  const formattedDate = format(date, 'yyyy-MM-dd', { locale: id });
+  return `sielis_daily_${meterId}_${formattedDate}.csv`;
+}

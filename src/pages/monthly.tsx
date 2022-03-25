@@ -13,12 +13,14 @@ import {
   Bar,
 } from 'recharts';
 import DatePicker from '../components/DatePicker';
+import ExportButton from '../components/ExportButton';
 import Layout from '../components/Layout';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
 import {
   fetchMonthlyData,
+  getMonthlyCsvFilename,
   parseDisplayMonthlyData,
   parseRawMonthlyData,
 } from '../lib/monthly';
@@ -70,6 +72,12 @@ const Monthly: NextPage = () => {
               date={date}
               onChange={date => setDate(date)}
             />
+            {status === 'success' && (
+              <ExportButton
+                data={rawData!.daily_data}
+                filename={getMonthlyCsvFilename(meterId!, date!)}
+              />
+            )}
             {status === 'loading' && (
               <p className="font-medium text-blue-900">Loading...</p>
             )}
