@@ -2,6 +2,7 @@ import { Icon } from '@iconify/react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import NavMenu from './NavMenu';
 
 // Store nav data
 const navListData = [
@@ -54,6 +55,7 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
             <nav className="ml-5 hidden gap-4 text-blue-900 sm:flex lg:ml-20 lg:gap-8">
               {navList}
             </nav>
+            <NavMenu className="ml-auto sm:hidden" navListData={navListData} />
           </div>
         </header>
         <main className="container mx-auto px-6 lg:max-w-screen-lg">
