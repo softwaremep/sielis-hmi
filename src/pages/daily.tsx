@@ -25,7 +25,7 @@ import {
   parseDisplayDailyData,
   parseRawDailyData,
 } from '../lib/daily';
-import { areaSelectOptions } from '../lib/utils';
+import area from '../../area.json';
 
 // Table columns
 const columns = [
@@ -63,7 +63,7 @@ const Daily: NextPage = () => {
             <Select
               title="Area"
               placeholder="Pilih area"
-              options={areaSelectOptions}
+              options={area}
               value={meterId}
               onChange={e => setMeterId(e.target.value)}
             />

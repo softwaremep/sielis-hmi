@@ -17,7 +17,7 @@ import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
 import { fetchNowData, parseDisplayNowData, parseRawNowData } from '../lib/now';
-import { areaSelectOptions } from '../lib/utils';
+import area from '../../area.json';
 
 // Table columns
 const columns = [
@@ -53,7 +53,7 @@ const Home: NextPage = () => {
             <Select
               title="Area"
               placeholder="Pilih area"
-              options={areaSelectOptions}
+              options={area}
               value={meterId}
               onChange={e => setMeterId(e.target.value)}
             />
