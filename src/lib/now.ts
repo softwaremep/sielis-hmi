@@ -207,3 +207,14 @@ export function parseDisplayNowData(data: NowData): DisplayNowData {
     },
   };
 }
+
+// Table columns
+export const nowTableColumns = [
+  { Header: 'Tegangan (VLN)', accessor: 'volt' },
+  { Header: 'Frekuensi (Hz)', accessor: 'freq' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Arus (A)', accessor: 'A' },
+  { Header: 'Arus (A1)', accessor: 'A1' },
+  { Header: 'Arus (A2)', accessor: 'A2' },
+  { Header: 'Arus (A3)', accessor: 'A3' },
+] as const;

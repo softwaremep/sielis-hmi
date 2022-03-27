@@ -21,22 +21,11 @@ import Table from '../components/Table';
 import {
   fetchMonthlyData,
   getMonthlyCsvFilename,
+  monthlyTableColumns,
   parseDisplayMonthlyData,
   parseRawMonthlyData,
 } from '../lib/monthly';
 import area from '../../area.json';
-
-// Table columns
-const columns = [
-  { Header: 'Tanggal', accessor: 'timestamp' },
-  { Header: 'Penggunaan (Rp)', accessor: 'cost' },
-  { Header: 'Energi (kWh)', accessor: 'energy' },
-  { Header: 'Tegangan (VLN)', accessor: 'VLN' },
-  { Header: 'Power Factor', accessor: 'PF' },
-  { Header: 'Fasa 1 (kWh)', accessor: 'phase1' },
-  { Header: 'Fasa 2 (kWh)', accessor: 'phase2' },
-  { Header: 'Fasa 3 (kWh)', accessor: 'phase3' },
-] as const;
 
 const Monthly: NextPage = () => {
   const [meterId, setMeterId] = useState('default');
@@ -174,7 +163,7 @@ const Monthly: NextPage = () => {
             </ResponsiveContainer>
             <Table
               className="mt-8"
-              columns={columns}
+              columns={monthlyTableColumns}
               data={displayData!.daily}
             />
           </>

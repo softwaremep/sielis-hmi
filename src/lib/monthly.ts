@@ -165,3 +165,15 @@ export function getMonthlyCsvFilename(meterId: string, date: Date) {
   const formattedDate = format(date, 'yyyy-MM', { locale: id });
   return `sielis_monthly_${meterId}_${formattedDate}.csv`;
 }
+
+// Table columns
+export const monthlyTableColumns = [
+  { Header: 'Tanggal', accessor: 'timestamp' },
+  { Header: 'Penggunaan (Rp)', accessor: 'cost' },
+  { Header: 'Energi (kWh)', accessor: 'energy' },
+  { Header: 'Tegangan (VLN)', accessor: 'VLN' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Fasa 1 (kWh)', accessor: 'phase1' },
+  { Header: 'Fasa 2 (kWh)', accessor: 'phase2' },
+  { Header: 'Fasa 3 (kWh)', accessor: 'phase3' },
+] as const;

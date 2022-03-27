@@ -196,3 +196,15 @@ export function getDailyCsvFilename(meterId: string, date: Date) {
   const formattedDate = format(date, 'yyyy-MM-dd', { locale: id });
   return `sielis_daily_${meterId}_${formattedDate}.csv`;
 }
+
+// Table columns
+export const dailyTableColumns = [
+  { Header: 'Jam', accessor: 'timestamp' },
+  { Header: 'Energi (kWh)', accessor: 'energy' },
+  { Header: 'Tegangan (VLN)', accessor: 'VLN' },
+  { Header: 'Power Factor', accessor: 'PF' },
+  { Header: 'Arus (A)', accessor: 'A' },
+  { Header: 'Arus (A1)', accessor: 'A1' },
+  { Header: 'Arus (A2)', accessor: 'A2' },
+  { Header: 'Arus (A3)', accessor: 'A3' },
+] as const;

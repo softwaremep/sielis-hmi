@@ -16,19 +16,13 @@ import Message from '../components/Message';
 import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
-import { fetchNowData, parseDisplayNowData, parseRawNowData } from '../lib/now';
+import {
+  fetchNowData,
+  nowTableColumns,
+  parseDisplayNowData,
+  parseRawNowData,
+} from '../lib/now';
 import area from '../../area.json';
-
-// Table columns
-const columns = [
-  { Header: 'Tegangan (VLN)', accessor: 'volt' },
-  { Header: 'Frekuensi (Hz)', accessor: 'freq' },
-  { Header: 'Power Factor', accessor: 'PF' },
-  { Header: 'Arus (A)', accessor: 'A' },
-  { Header: 'Arus (A1)', accessor: 'A1' },
-  { Header: 'Arus (A2)', accessor: 'A2' },
-  { Header: 'Arus (A3)', accessor: 'A3' },
-] as const;
 
 const Home: NextPage = () => {
   const [meterId, setMeterId] = useState('default');
@@ -179,7 +173,7 @@ const Home: NextPage = () => {
             </ResponsiveContainer>
             <Table
               className="mt-8"
-              columns={columns}
+              columns={nowTableColumns}
               data={[displayData!.last]}
             />
           </>
