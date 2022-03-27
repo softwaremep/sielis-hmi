@@ -92,7 +92,7 @@ export async function fetchMonthlyData(
 ): Promise<RawMonthlyData> {
   const queryParams = new URLSearchParams({
     meter_id: meterId,
-    date: format(date, 'yyyy-MM-dd'),
+    date: format(date, 'yyyy-MM'),
   });
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_DATA_PROVIDER}/monthly?${queryParams.toString()}`
