@@ -1,5 +1,5 @@
 import currency from 'currency.js';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import { id } from 'date-fns/locale';
 import {
   currencyOptions,
@@ -136,7 +136,11 @@ export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
       phase1: parseValue(d.phase1, undefined, '.'),
       phase2: parseValue(d.phase2, undefined, '.'),
       phase3: parseValue(d.phase3, undefined, '.'),
-      timestamp: d.timestamp.getTime(),
+      timestamp: set(d.timestamp, {
+        hours: 0,
+        minutes: 0,
+        seconds: 0,
+      }).getTime(),
     })),
     tickFormatter: (value, _) => format(value, 'd', { locale: id }),
     labelFormatter: label =>
