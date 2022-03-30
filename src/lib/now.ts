@@ -1,5 +1,5 @@
 import currency from 'currency.js';
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 import { id } from 'date-fns/locale';
 import {
   currencyOptions,
@@ -75,7 +75,7 @@ export type NowData = {
 
 export type DisplayNowData = {
   chart: {
-    power: string;
+    power: number;
     timestamp: number;
   }[];
   tickFormatter: (tick: number) => string;
@@ -164,8 +164,8 @@ export function parseRawNowData(data: RawNowData): NowData {
 export function parseDisplayNowData(data: NowData): DisplayNowData {
   return {
     chart: data.chart.map(d => ({
-      power: parseValue(d.power, undefined, '.'),
-      timestamp: d.timestamp.getTime(),
+      power: parseFloat(d.power.toFixed(2)),
+      timestamp: set(d.timestamp, { seconds: 0 }).getTime(),
     })),
     tickFormatter: tick => format(tick, timestampHourMinute, { locale: id }),
     labelFormatter: label => format(label, timestampHourMinute, { locale: id }),

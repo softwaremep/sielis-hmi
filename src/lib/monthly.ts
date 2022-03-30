@@ -60,9 +60,9 @@ export type MonthlyData = {
 
 export type DisplayMonthlyData = {
   chart: {
-    phase1: string;
-    phase2: string;
-    phase3: string;
+    phase1: number;
+    phase2: number;
+    phase3: number;
     timestamp: number;
   }[];
   tickFormatter: (value: any, index: number) => string;
@@ -133,9 +133,9 @@ export function parseRawMonthlyData(data: RawMonthlyData): MonthlyData {
 export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
   return {
     chart: data.chart.map(d => ({
-      phase1: parseValue(d.phase1, undefined, '.'),
-      phase2: parseValue(d.phase2, undefined, '.'),
-      phase3: parseValue(d.phase3, undefined, '.'),
+      phase1: parseFloat(d.phase1.toFixed(2)),
+      phase2: parseFloat(d.phase2.toFixed(2)),
+      phase3: parseFloat(d.phase3.toFixed(2)),
       timestamp: set(d.timestamp, {
         hours: 0,
         minutes: 0,
