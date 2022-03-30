@@ -25,7 +25,7 @@ export type RawNowData = {
     tegangan: number;
     timestamp: string;
   }[];
-  prev_month_data: {
+  prev_month_data?: {
     day_cost: number;
     day_daya: number;
     hour_cost: number;
@@ -57,7 +57,7 @@ export type NowData = {
     volt: number;
     timestamp: Date;
   };
-  prevMonth: {
+  prevMonth?: {
     dayCost: currency;
     dayPower: number;
     hourCost: currency;
@@ -98,7 +98,7 @@ export type DisplayNowData = {
       time: string;
     };
   };
-  prevMonth: {
+  prevMonth?: {
     dayCost: string;
     dayPower: string;
     hourCost: string;
@@ -144,7 +144,7 @@ export function parseRawNowData(data: RawNowData): NowData {
       volt: data.last_data[0].tegangan,
       timestamp: newUTCDate(data.last_data[0].timestamp),
     },
-    prevMonth: {
+    prevMonth: data.prev_month_data && {
       dayCost: currency(data.prev_month_data[0].day_cost),
       dayPower: data.prev_month_data[0].day_daya,
       hourCost: currency(data.prev_month_data[0].hour_cost),
@@ -191,7 +191,7 @@ export function parseDisplayNowData(data: NowData): DisplayNowData {
         }),
       },
     },
-    prevMonth: {
+    prevMonth: data.prevMonth && {
       dayCost: data.prevMonth.dayCost.format(currencyOptions),
       dayPower: parseValue(data.prevMonth.dayPower, 'kWh'),
       hourCost: data.prevMonth.hourCost.format(currencyOptions),

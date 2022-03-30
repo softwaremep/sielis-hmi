@@ -26,7 +26,7 @@ export type RawDailyData = {
     timestamp: string;
     vln: number;
   }[];
-  prev_month_data: {
+  prev_month_data?: {
     avg_cost: number;
     avg_daya: number;
     total_cost: number;
@@ -57,7 +57,7 @@ export type DailyData = {
     timestamp: Date;
     VLN: number;
   }[];
-  prevMonth: {
+  prevMonth?: {
     averageCost: currency;
     averagePower: number;
     totalCost: currency;
@@ -91,7 +91,7 @@ export type DisplayDailyData = {
     timestamp: string;
     VLN: string;
   }[];
-  prevMonth: {
+  prevMonth?: {
     averageCost: string;
     averagePower: string;
     totalCost: string;
@@ -140,7 +140,7 @@ export function parseRawDailyData(data: RawDailyData): DailyData {
       timestamp: newUTCDate(d.timestamp),
       VLN: d.vln,
     })),
-    prevMonth: {
+    prevMonth: data.prev_month_data && {
       averageCost: currency(data.prev_month_data[0].avg_cost),
       averagePower: data.prev_month_data[0].avg_daya,
       totalCost: currency(data.prev_month_data[0].total_cost),
@@ -177,7 +177,7 @@ export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
       timestamp: getTimestampTick(d.timestamp.getTime()),
       VLN: parseValue(d.VLN),
     })),
-    prevMonth: {
+    prevMonth: data.prevMonth && {
       averageCost: data.prevMonth.averageCost.format(currencyOptions),
       averagePower: parseValue(data.prevMonth.averagePower, 'kWh'),
       totalCost: data.prevMonth.totalCost.format(currencyOptions),

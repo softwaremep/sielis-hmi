@@ -99,36 +99,46 @@ const Home: NextPage = () => {
                   <h3 className="mt-6 text-lg font-semibold md:col-span-2 lg:col-span-3">
                     Bulan lalu
                   </h3>
-                  <Stat
-                    title="Total"
-                    primary={displayData!.prevMonth.totalCost}
-                    secondary={displayData!.prevMonth.totalPower}
-                    variant="aside"
-                  />
-                  <Stat
-                    title="Rata-rata per hari"
-                    primary={displayData!.prevMonth.dayCost}
-                    secondary={displayData!.prevMonth.dayPower}
-                    variant="aside"
-                    unit="hari"
-                  />
-                  <Stat
-                    title="Rata-rata per jam"
-                    primary={displayData!.prevMonth.hourCost}
-                    secondary={displayData!.prevMonth.hourPower}
-                    variant="aside"
-                    unit="jam"
-                  />
+                  {displayData!.prevMonth ? (
+                    <>
+                      <Stat
+                        title="Total"
+                        primary={displayData!.prevMonth.totalCost}
+                        secondary={displayData!.prevMonth.totalPower}
+                        variant="aside"
+                      />
+                      <Stat
+                        title="Rata-rata per hari"
+                        primary={displayData!.prevMonth.dayCost}
+                        secondary={displayData!.prevMonth.dayPower}
+                        variant="aside"
+                        unit="hari"
+                      />
+                      <Stat
+                        title="Rata-rata per jam"
+                        primary={displayData!.prevMonth.hourCost}
+                        secondary={displayData!.prevMonth.hourPower}
+                        variant="aside"
+                        unit="jam"
+                      />
+                    </>
+                  ) : (
+                    <p className="text-red-500 md:col-span-2">
+                      Data bulan lalu tidak tersedia
+                    </p>
+                  )}
                 </div>
-                <Message
-                  type={
-                    data!.today.averageCost < data!.prevMonth.hourCost
-                      ? 'positive'
-                      : 'negative'
-                  }
-                  variant="now"
-                  className="mt-8"
-                />
+                {data!.prevMonth && (
+                  <Message
+                    type={
+                      data!.today.averageCost < data!.prevMonth.hourCost
+                        ? 'positive'
+                        : 'negative'
+                    }
+                    variant="now"
+                    className="mt-8"
+                  />
+                )}
               </>
             )}
           </section>
