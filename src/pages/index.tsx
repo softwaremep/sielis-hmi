@@ -1,5 +1,4 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
 import {
   CartesianGrid,
@@ -13,7 +12,6 @@ import {
 } from 'recharts';
 import Layout from '../components/Layout';
 import Message from '../components/Message';
-import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
 import {
@@ -22,15 +20,13 @@ import {
   parseDisplayNowData,
   parseRawNowData,
 } from '../lib/now';
-import area from '../../area.json';
 
 const Home: NextPage = () => {
-  const [meterId, setMeterId] = useState('default');
+  const meterId = process.env.NEXT_PUBLIC_METER_ID!;
   const { status, data: rawData } = useQuery(
     ['now', meterId],
     () => fetchNowData(meterId),
     {
-      enabled: meterId !== 'default',
       refetchInterval: Number(process.env.NEXT_PUBLIC_REFETCH_INTERVAL),
       refetchOnWindowFocus: false,
     }
@@ -44,13 +40,6 @@ const Home: NextPage = () => {
         <h2 className="text-xl font-bold">Total Konsumsi Energi Listrik</h2>
         <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-0">
           <section className="space-y-8">
-            <Select
-              title="Area"
-              placeholder="Pilih area"
-              options={area}
-              value={meterId}
-              onChange={e => setMeterId(e.target.value)}
-            />
             {status === 'success' && (
               <>
                 <Stat

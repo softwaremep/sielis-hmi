@@ -15,7 +15,6 @@ import {
 import DatePicker from '../components/DatePicker';
 import ExportButton from '../components/ExportButton';
 import Layout from '../components/Layout';
-import Select from '../components/Select';
 import Stat from '../components/Stat';
 import Table from '../components/Table';
 import {
@@ -25,16 +24,15 @@ import {
   parseDisplayMonthlyData,
   parseRawMonthlyData,
 } from '../lib/monthly';
-import area from '../../area.json';
 
 const Monthly: NextPage = () => {
-  const [meterId, setMeterId] = useState('default');
+  const meterId = process.env.NEXT_PUBLIC_METER_ID!;
   const [date, setDate] = useState<Date | null>(null);
   const { status, data: rawData } = useQuery(
     ['monthly', meterId, date],
     () => fetchMonthlyData(meterId, date!),
     {
-      enabled: meterId !== 'default' && !!date,
+      enabled: !!date,
       refetchInterval: Number(process.env.NEXT_PUBLIC_REFETCH_INTERVAL),
       refetchOnWindowFocus: false,
     }
@@ -48,13 +46,6 @@ const Monthly: NextPage = () => {
         <h2 className="text-xl font-bold">Konsumsi Energi Listrik Bulanan</h2>
         <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-0">
           <section className="space-y-8">
-            <Select
-              title="Area"
-              placeholder="Pilih area"
-              options={area}
-              value={meterId}
-              onChange={e => setMeterId(e.target.value)}
-            />
             <DatePicker
               monthPicker
               title="Bulan"
