@@ -28,7 +28,7 @@ export function getTimestampTick(timestamp: number) {
   let start, end;
   for (let hours = 1; hours <= 24; hours++) {
     start = set(date, { hours: hours - 1, minutes: 0, seconds: 0 });
-    end = set(date, { hours, minutes: 0, seconds: 0 });
+    end = set(date, { hours: hours - 1, minutes: 0, seconds: 59 });
     if (isWithinInterval(date, { start, end })) {
       return hours.toString();
     }
