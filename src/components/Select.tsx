@@ -1,8 +1,8 @@
 type Props = {
   title: string;
   placeholder: string;
-  options: { value: string; label: string }[];
-  value: string;
+  options?: { value: number; label: string }[];
+  value: number;
   onChange: React.ChangeEventHandler<HTMLSelectElement>;
 };
 
@@ -15,14 +15,15 @@ function Select({ title, placeholder, options, value, onChange }: Props) {
         value={value}
         onChange={onChange}
       >
-        <option disabled value="default">
+        <option disabled value={-1}>
           {placeholder}
         </option>
-        {options.map(option => (
-          <option value={option.value} key={option.value}>
-            {option.label}
-          </option>
-        ))}
+        {options &&
+          options.map(option => (
+            <option value={option.value} key={option.value}>
+              {option.label}
+            </option>
+          ))}
       </select>
     </div>
   );

@@ -114,8 +114,8 @@ export type DisplayNowData = {
   };
 };
 
-export async function fetchNowData(meterId: string): Promise<RawNowData> {
-  const queryParams = new URLSearchParams({ meter_id: meterId });
+export async function fetchNowData(meterId: number): Promise<RawNowData> {
+  const queryParams = new URLSearchParams({ meter_id: meterId.toString() });
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_DATA_PROVIDER}/now?${queryParams.toString()}`
   );

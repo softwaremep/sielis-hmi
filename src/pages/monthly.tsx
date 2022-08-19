@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useQuery } from 'react-query';
 import {
   ResponsiveContainer,
@@ -26,21 +26,33 @@ import {
   parseRawMonthlyData,
 } from '../lib/monthly';
 import area from '../../area.json';
+import { MeterContext } from '../lib/context';
 
 const Monthly: NextPage = () => {
-  const [meterId, setMeterId] = useState('default');
+  const [meterId, setMeterId] = useState(-1);
   const [date, setDate] = useState<Date | null>(null);
   const { status, data: rawData } = useQuery(
     ['monthly', meterId, date],
     () => fetchMonthlyData(meterId, date!),
     {
-      enabled: meterId !== 'default' && !!date,
+      enabled: meterId !== -1 && !!date,
       refetchInterval: Number(process.env.NEXT_PUBLIC_REFETCH_INTERVAL),
       refetchOnWindowFocus: false,
     }
   );
   const data = rawData ? parseRawMonthlyData(rawData) : undefined;
   const displayData = data ? parseDisplayMonthlyData(data) : undefined;
+
+  const {
+    facultyIndex,
+    buildingIndex,
+    facultyMeterId,
+    buildingMeterId,
+    floorMeterId,
+    setFacultyIndex,
+    setBuildingIndex,
+    setFloorIndex,
+  } = useContext(MeterContext);
 
   return (
     <Layout title="Bulanan">
@@ -49,11 +61,54 @@ const Monthly: NextPage = () => {
         <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-0">
           <section className="space-y-8">
             <Select
-              title="Area"
-              placeholder="Pilih area"
-              options={area}
-              value={meterId}
-              onChange={e => setMeterId(e.target.value)}
+              title="Fakultas"
+              placeholder="Pilih Fakultas"
+              options={area.fakultas}
+              value={facultyMeterId}
+              onChange={e => {
+                const selectedMeterId = parseInt(e.target.value);
+                setMeterId(selectedMeterId);
+                setFacultyIndex(
+                  area.fakultas.findIndex(
+                    fakultas => fakultas.value === selectedMeterId
+                  )
+                );
+                setBuildingIndex(-1);
+                setFloorIndex(-1);
+              }}
+            />
+            <Select
+              title="Gedung"
+              placeholder="Pilih Gedung"
+              options={area.fakultas[facultyIndex]?.gedung}
+              value={buildingMeterId}
+              onChange={e => {
+                const selectedMeterId = parseInt(e.target.value);
+                setMeterId(selectedMeterId);
+                setBuildingIndex(
+                  area.fakultas[facultyIndex].gedung.findIndex(
+                    gedung => gedung.value === selectedMeterId
+                  )
+                );
+                setFloorIndex(-1);
+              }}
+            />
+            <Select
+              title="Lantai"
+              placeholder="Pilih Lantai"
+              options={
+                area.fakultas[facultyIndex]?.gedung[buildingIndex]?.lantai
+              }
+              value={floorMeterId}
+              onChange={e => {
+                const selectedMeterId = parseInt(e.target.value);
+                setMeterId(selectedMeterId);
+                setFloorIndex(
+                  area.fakultas[facultyIndex].gedung[
+                    buildingIndex
+                  ].lantai.findIndex(lantai => lantai.value === selectedMeterId)
+                );
+              }}
             />
             <DatePicker
               monthPicker

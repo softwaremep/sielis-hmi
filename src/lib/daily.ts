@@ -106,11 +106,11 @@ export type DisplayDailyData = {
 };
 
 export async function fetchDailyData(
-  meterId: string,
+  meterId: number,
   date: Date
 ): Promise<RawDailyData> {
   const queryParams = new URLSearchParams({
-    meter_id: meterId,
+    meter_id: meterId.toString(),
     date: format(date, 'yyyy-MM-dd'),
   });
   const response = await fetch(
@@ -192,7 +192,7 @@ export function parseDisplayDailyData(data: DailyData): DisplayDailyData {
   };
 }
 
-export function getDailyCsvFilename(meterId: string, date: Date) {
+export function getDailyCsvFilename(meterId: number, date: Date) {
   const formattedDate = format(date, 'yyyy-MM-dd', { locale: id });
   return `sielis_daily_${meterId}_${formattedDate}.csv`;
 }

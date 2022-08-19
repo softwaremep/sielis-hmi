@@ -87,11 +87,11 @@ export type DisplayMonthlyData = {
 };
 
 export async function fetchMonthlyData(
-  meterId: string,
+  meterId: number,
   date: Date
 ): Promise<RawMonthlyData> {
   const queryParams = new URLSearchParams({
-    meter_id: meterId,
+    meter_id: meterId.toString(),
     date: format(date, 'yyyy-MM'),
   });
   const response = await fetch(
@@ -165,7 +165,7 @@ export function parseDisplayMonthlyData(data: MonthlyData): DisplayMonthlyData {
   };
 }
 
-export function getMonthlyCsvFilename(meterId: string, date: Date) {
+export function getMonthlyCsvFilename(meterId: number, date: Date) {
   const formattedDate = format(date, 'yyyy-MM', { locale: id });
   return `sielis_monthly_${meterId}_${formattedDate}.csv`;
 }
