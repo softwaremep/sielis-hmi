@@ -9,6 +9,7 @@ const navListData = [
   { label: 'Beranda', href: '/', icon: 'bi:house-door-fill' },
   { label: 'Harian', href: '/daily', icon: 'bi:calendar-day-fill' },
   { label: 'Bulanan', href: '/monthly', icon: 'bi:calendar-month-fill' },
+  { label: 'Heatmap', href: '/heatmap', icon: 'carbon:heat-map-03' },
 ];
 
 type Props = {
