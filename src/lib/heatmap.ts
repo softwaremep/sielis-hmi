@@ -81,6 +81,5 @@ export const plotlyLayoutConfig = {
     title: { text: 'hour' },
     type: 'category',
   },
-  width: '100%',
-  height: '100%',
+  height: 350,
 };

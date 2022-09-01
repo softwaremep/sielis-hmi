@@ -124,7 +124,7 @@ const Heatmap: NextPage = () => {
               </p>
             )}
           </section>
-          <section className="lg:mx-auto">
+          <section className="relative lg:mx-auto">
             {data && (
               <Plot
                 // @ts-ignore
