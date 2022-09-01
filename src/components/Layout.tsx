@@ -42,10 +42,10 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
       <div className="flex min-h-screen flex-col gap-14">
         <header className="border-b border-b-stone-200 bg-stone-50">
           <div className="container mx-auto flex max-w-screen-lg items-center px-6 py-3">
-            <div className="mr-6 text-xl font-semibold text-blue-900">
+            <div className="mr-5 text-xl font-semibold text-blue-900">
               SiElis
             </div>
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
               <h1 className="font-semibold lg:text-xl">
                 Sistem Informasi Energi Listrik
               </h1>
@@ -53,7 +53,7 @@ function Layout({ title, children }: React.PropsWithChildren<Props>) {
                 Institut Teknologi Bandung
               </div>
             </div>
-            <nav className="ml-5 hidden gap-4 text-blue-900 sm:flex lg:ml-20 lg:gap-8">
+            <nav className="ml-5 hidden gap-4 text-blue-900 sm:flex lg:ml-6 lg:gap-8">
               {navList}
             </nav>
             <NavMenu className="ml-auto sm:hidden" navListData={navListData} />
