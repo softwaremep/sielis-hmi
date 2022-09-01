@@ -55,6 +55,17 @@ export const plotlyDataConfig = {
     'Sunday',
   ],
   type: 'heatmap',
+  xgap: 1,
+  ygap: 1,
+  colorscale: [
+    [0, 'rgb(30, 106, 53)'],
+    [0.25, 'rgb(142, 203, 96)'],
+    [0.5, 'rgb(242, 250, 170)'],
+    [0.75, 'rgb(242, 155, 82)'],
+    [1, 'rgb(158, 0, 37)'],
+  ],
+  hovertemplate:
+    'Hour: %{x}<br>' + 'Day: %{y}<br>' + 'Power: %{z} W' + '<extra></extra>',
   colorbar: {
     len: 0.9,
     thickness: 15,
