@@ -124,13 +124,18 @@ const Heatmap: NextPage = () => {
               </p>
             )}
           </section>
-          <section className="relative lg:mx-auto">
+          <section className="lg:mx-auto">
             {data && (
-              <Plot
-                // @ts-ignore
-                data={[{ ...plotlyDataConfig, z: data }]}
-                layout={plotlyLayoutConfig}
-              />
+              <>
+                <p className="mb-2 text-center">
+                  {data.dates.start} - {data.dates.end}
+                </p>
+                <Plot
+                  // @ts-ignore
+                  data={[{ ...plotlyDataConfig, z: data.heatmap }]}
+                  layout={plotlyLayoutConfig}
+                />
+              </>
             )}
           </section>
         </div>

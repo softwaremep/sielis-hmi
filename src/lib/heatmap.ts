@@ -12,7 +12,13 @@ export type RawHeatmapData = {
   }[];
 };
 
-export type HeatmapData = number[][];
+export type HeatmapData = {
+  dates: {
+    start: string;
+    end: string;
+  };
+  heatmap: number[][];
+};
 
 export async function fetchHeatmapData(
   meterId: number,
@@ -40,7 +46,7 @@ export function parseHeatmapData(rawData: RawHeatmapData): HeatmapData {
     },
     Object.create(null)
   );
-  return Object.values(data).reverse();
+  return { dates: rawData.dates, heatmap: Object.values(data).reverse() };
 }
 
 export const plotlyDataConfig = {
