@@ -17,7 +17,7 @@ export type HeatmapData = {
     start: string;
     end: string;
   };
-  heatmap: number[][];
+  heatmap: (number | null)[][];
 };
 
 export async function fetchHeatmapData(
@@ -38,15 +38,33 @@ export async function fetchHeatmapData(
 }
 
 export function parseHeatmapData(rawData: RawHeatmapData): HeatmapData {
-  const data: { [key: number]: number[] } = rawData.heatmap.reduce(
+  const data: { [key: number]: (number | null)[] } = rawData.heatmap.reduce(
     (result, item) => {
-      result[item.day] = result[item.day] || [];
-      result[item.day].push(item.value);
+      result[item.day] = result[item.day] || {};
+      result[item.day][item.hour] = item.value;
       return result;
     },
     Object.create(null)
   );
-  return { dates: rawData.dates, heatmap: Object.values(data).reverse() };
+
+  // Fill empty day and hour values
+  for (let day = 1; day <= 7; day++) {
+    if (!Object.hasOwn(data, day)) {
+      data[day] = [];
+    }
+    for (let hour = 0; hour < 24; hour++) {
+      if (!Object.hasOwn(data[day], hour)) {
+        data[day][hour] = null;
+      }
+    }
+  }
+
+  return {
+    dates: rawData.dates,
+    heatmap: Object.values(data)
+      .map(d => Object.values(d))
+      .reverse(),
+  };
 }
 
 export const plotlyDataConfig = {
