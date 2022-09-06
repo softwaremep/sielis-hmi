@@ -51,7 +51,7 @@ const Heatmap: NextPage = () => {
     <Layout title="Heatmap">
       <section>
         <h2 className="text-xl font-bold">Average Power Consumption</h2>
-        <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-0">
+        <div className="mt-8 flex flex-col items-start gap-8 sm:flex-row lg:gap-1">
           <section className="space-y-8">
             <Select
               title="Fakultas"
@@ -126,16 +126,14 @@ const Heatmap: NextPage = () => {
           </section>
           <section className="lg:mx-auto">
             {data && (
-              <>
-                <p className="mb-2 text-center">
-                  {data.dates.start} - {data.dates.end}
-                </p>
-                <Plot
-                  // @ts-ignore
-                  data={[{ ...plotlyDataConfig, z: data.heatmap }]}
-                  layout={plotlyLayoutConfig}
-                />
-              </>
+              <Plot
+                // @ts-ignore
+                data={[{ ...plotlyDataConfig, z: data.heatmap }]}
+                layout={{
+                  ...plotlyLayoutConfig,
+                  title: `${data.dates.start} - ${data.dates.end}`,
+                }}
+              />
             )}
           </section>
         </div>

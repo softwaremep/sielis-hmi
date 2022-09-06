@@ -100,7 +100,7 @@ export const plotlyDataConfig = {
 
 export const plotlyLayoutConfig = {
   font: { family: 'InterVariable' },
-  margin: { t: 0, l: 120, r: 0 },
+  margin: { t: 40, l: 120, r: 0 },
   xaxis: {
     title: { text: 'hour' },
     type: 'category',
